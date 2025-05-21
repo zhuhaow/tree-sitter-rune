@@ -1,0 +1,39 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "rune",
+      "camelcase": "Rune",
+      "title": "Rune",
+      "scope": "source.rune",
+      "file-types": [
+        "rn"
+      ],
+      "injection-regex": "^rune$",
+      "class-name": "TreeSitterRune"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Rune grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Zhuhao Wang",
+        "email": "zhuhaow@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/zhuhaow/tree-sitter-rune"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
