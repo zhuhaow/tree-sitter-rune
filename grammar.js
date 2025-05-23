@@ -13,12 +13,8 @@ module.exports = grammar({
   rules: {
     source_file: $ => repeat($._item),
 
-    _declaration_item: $ => choice(
-      $.use_declaration,
-    ),
-
     _item: $ => choice(
-      $._declaration_item,
+      $.use_declaration,
     ),
 
     use_declaration: $ => seq(

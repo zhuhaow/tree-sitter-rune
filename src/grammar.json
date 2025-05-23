@@ -9,21 +9,12 @@
         "name": "_item"
       }
     },
-    "_declaration_item": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "use_declaration"
-        }
-      ]
-    },
     "_item": {
       "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_declaration_item"
+          "name": "use_declaration"
         }
       ]
     },
