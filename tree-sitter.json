@@ -4,7 +4,6 @@
     {
       "name": "rune",
       "camelcase": "Rune",
-      "title": "Rune",
       "scope": "source.rune",
       "file-types": [
         "rn"

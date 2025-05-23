@@ -11,7 +11,30 @@ module.exports = grammar({
   name: "rune",
 
   rules: {
-    // TODO: add the actual grammar rules
-    source_file: $ => "hello"
+    source_file: $ => repeat($._item),
+
+    _declaration_item: $ => choice(
+      $.use_declaration,
+    ),
+
+    _item: $ => choice(
+      $._declaration_item,
+    ),
+
+    use_declaration: $ => seq(
+      "use",
+      $.path,
+      ";"
+    ),
+
+    path: $ => seq(
+      $.identifier,
+      repeat(seq(
+        "::",
+        $.identifier,
+      )),
+    ),
+
+    identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
   }
 });

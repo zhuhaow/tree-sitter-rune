@@ -1,0 +1,94 @@
+==================
+Use Declarations
+==================
+
+use foo;
+
+---
+
+(source_file
+  (use_declaration
+    (path (identifier))
+  )
+)
+
+==================
+Use Declarations with Path
+==================
+
+use foo::bar::baz;
+
+---
+
+(source_file
+  (use_declaration
+    (path
+      (identifier)
+      (identifier)
+      (identifier)
+    )
+  )
+)
+
+==================
+Invalid - Missing Semicolon
+==================
+
+use foo
+
+---
+
+(source_file
+  (use_declaration
+    (path (identifier))
+    (MISSING ";")
+  )
+)
+
+==================
+Invalid - Missing Path
+==================
+
+use ;
+
+---
+
+(source_file
+  (use_declaration
+        (path
+          (MISSING identifier))))
+
+==================
+Invalid - Keyword as Identifier
+==================
+
+use use;
+
+---
+
+(source_file
+  (use_declaration
+    (path (identifier))
+  )
+)
+
+==================
+Multiple Use Declarations
+==================
+
+use a;
+use b::c;
+
+---
+
+(source_file
+  (use_declaration
+    (path (identifier))
+  )
+  (use_declaration
+    (path
+      (identifier)
+      (identifier)
+    )
+  )
+)
