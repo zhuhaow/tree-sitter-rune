@@ -9,6 +9,7 @@ on:
       - test/**
       - bindings/**
       - binding.gyp
+      - .github/**
   pull_request:
     paths:
       - grammar.js
