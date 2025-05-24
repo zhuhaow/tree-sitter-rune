@@ -15,7 +15,8 @@ module.exports = grammar({
 
     _item: $ => choice(
       $.use_declaration,
-      $.struct_declaration, // Added struct_declaration
+      $.struct_declaration,
+      $.enum_declaration, // Added enum_declaration
       $._expression, // Allow expressions as top-level items
     ),
 
@@ -110,6 +111,51 @@ module.exports = grammar({
         optional(",") // Optional trailing comma for fields
       )),
       "}"
+    ),
+
+    // Enum declaration rule: e.g., enum Color { Red, Green, Blue }
+    enum_declaration: $ => seq(
+      "enum",
+      field("name", $.identifier),
+      "{",
+      optional(seq(
+        $.enum_variant,
+        repeat(seq(",", $.enum_variant)),
+        optional(",") // Optional trailing comma for variants
+      )),
+      "}"
+    ),
+
+    // Represents the payload of a tuple-like enum variant, e.g., (v1, v2)
+    // where v1, v2 are value names (identifiers).
+    _enum_variant_tuple_payload: $ => seq(
+      "(",
+      field("value_name", $.identifier), // Requires at least one value name
+      repeat(seq(",", field("value_name", $.identifier))),
+      optional(","), // Optional trailing comma for value names
+      ")"
+    ),
+
+    // Represents the payload of a struct-like enum variant, e.g., { f1, f2 }
+    // where f1, f2 are field names (identifiers).
+    _enum_variant_struct_payload: $ => seq(
+      "{",
+      optional(seq( // Allows for empty struct payload like `Variant {}`
+        field("field_name", $.identifier),
+        repeat(seq(",", field("field_name", $.identifier))),
+        optional(",") // Optional trailing comma for field names
+      )),
+      "}"
+    ),
+
+    enum_variant: $ => seq(
+      field("name", $.identifier),
+      optional(
+        choice(
+          field("tuple_payload", $._enum_variant_tuple_payload),
+          field("struct_payload", $._enum_variant_struct_payload)
+        )
+      )
     ),
   }
 });

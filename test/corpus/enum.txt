@@ -1,0 +1,153 @@
+===
+Enum Declaration with no variants
+===
+
+enum Empty {}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)))
+
+===
+Enum Declaration with one variant
+===
+
+enum Color {
+    Red
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant name: (identifier))))
+
+===
+Enum Declaration with multiple variants
+===
+
+enum IpAddrKind {
+    V4,
+    V6
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant name: (identifier))
+    (enum_variant name: (identifier))))
+
+===
+Enum Declaration with multiple variants and trailing comma
+===
+
+enum Message {
+    Quit,
+    Move,
+    Write,
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant name: (identifier))
+    (enum_variant name: (identifier))
+    (enum_variant name: (identifier))))
+
+===
+Enum with tuple-like variant payload
+===
+
+enum Message {
+    Write(message_content),
+    Move(x_coord, y_coord),
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant
+      name: (identifier)
+      value_name: (identifier))
+    (enum_variant
+      name: (identifier)
+      value_name: (identifier) value_name: (identifier))))
+
+===
+Enum with struct-like variant payload
+===
+
+enum Event {
+    Update { id, value },
+    Delete { id },
+    Notify {},
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant
+      name: (identifier)
+      field_name: (identifier) field_name: (identifier))
+    (enum_variant
+      name: (identifier)
+      field_name: (identifier))
+    (enum_variant
+      name: (identifier))))
+
+===
+Enum with mixed variant payloads
+===
+
+enum Action {
+    Process(id_val),
+    Log { message_text },
+    NoOp,
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant
+      name: (identifier)
+      value_name: (identifier))
+    (enum_variant
+      name: (identifier)
+      field_name: (identifier))
+    (enum_variant
+      name: (identifier))))
+
+===
+Option Enum (Special Case - Some)
+===
+
+Some
+
+---
+
+(source_file
+  (identifier))
+
+===
+Option Enum (Special Case - None)
+===
+
+None
+
+---
+
+(source_file
+  (identifier))
