@@ -9,3 +9,37 @@ Empty Object Literal
 (source_file
   (object_literal))
 
+===
+Object Literal with Key-Value Pairs
+===
+
+#{ "foo": 42, bar: "baz", "qux-quux": true }
+
+---
+
+(source_file
+  (object_literal
+    (object_entry
+      (static_string)
+      (integer))
+    (object_entry
+      (identifier)
+      (static_string))
+    (object_entry
+      (static_string)
+      (boolean))))
+
+===
+Object Literal with Trailing Comma
+===
+
+#{ "foo": 42, }
+
+---
+
+(source_file
+  (object_literal
+    (object_entry
+      (static_string)
+      (integer))))
+

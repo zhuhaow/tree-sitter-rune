@@ -77,12 +77,24 @@ module.exports = grammar({
       "]"
     ),
 
-    // Object literal rule: e.g., #{}
-    object_literal: $ => token(seq(
+    // Object entry rule for key-value pairs: e.g., "key": value
+    object_entry: $ => seq(
+      choice($.static_string, $.identifier), // Keys can be strings or identifiers
+      ":",
+      $._expression
+    ),
+
+    // Object literal rule: e.g., #{ "foo": 42, bar: "baz" } or #{}
+    object_literal: $ => seq(
       "#",
       "{",
+      optional(seq(
+        $.object_entry,
+        repeat(seq(",", $.object_entry)),
+        optional(",") // Optional trailing comma
+      )),
       "}"
-    )),
+    ),
 
     _empty_tuple_marker: $ => ",",
 
