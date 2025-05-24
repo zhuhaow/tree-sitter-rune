@@ -53,6 +53,10 @@
           "named": true
         },
         {
+          "type": "object_literal",
+          "named": true
+        },
+        {
           "type": "static_string",
           "named": true
         },
@@ -119,6 +123,10 @@
           "named": true
         },
         {
+          "type": "object_literal",
+          "named": true
+        },
+        {
           "type": "static_string",
           "named": true
         },
@@ -175,6 +183,10 @@
   },
   {
     "type": "integer",
+    "named": true
+  },
+  {
+    "type": "object_literal",
     "named": true
   },
   {

@@ -22,6 +22,7 @@ module.exports = grammar({
     _expression: $ => choice(
       $._primitive,
       $.vector,
+      $.object_literal, // Added object_literal
       $.identifier
       // Future expression types can be added here
     ),
@@ -72,5 +73,12 @@ module.exports = grammar({
       )),
       "]"
     ),
+
+    // Object literal rule: e.g., #{}
+    object_literal: $ => token(seq(
+      "#",
+      "{",
+      "}"
+    )),
   }
 });

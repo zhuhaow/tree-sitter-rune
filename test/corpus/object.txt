@@ -1,0 +1,11 @@
+===
+Empty Object Literal
+===
+
+#{}
+
+---
+
+(source_file
+  (object_literal))
+
