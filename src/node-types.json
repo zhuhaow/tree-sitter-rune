@@ -20,12 +20,13 @@
     }
   },
   {
-    "type": "primitive",
+    "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
           "type": "boolean",
@@ -44,6 +45,10 @@
           "named": true
         },
         {
+          "type": "identifier",
+          "named": true
+        },
+        {
           "type": "integer",
           "named": true
         },
@@ -54,25 +59,13 @@
         {
           "type": "unit",
           "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "source_file",
-    "named": true,
-    "root": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "primitive",
-          "named": true
         },
         {
           "type": "use_declaration",
+          "named": true
+        },
+        {
+          "type": "vector",
           "named": true
         }
       ]
@@ -94,11 +87,70 @@
     }
   },
   {
+    "type": "vector",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "byte",
+          "named": true
+        },
+        {
+          "type": "char",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "static_string",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        },
+        {
+          "type": "vector",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
     "type": "::",
     "named": false
   },
   {
     "type": ";",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {

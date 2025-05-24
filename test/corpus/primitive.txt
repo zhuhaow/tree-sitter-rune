@@ -4,8 +4,7 @@ unit type
 ()
 ---
 (source_file
-  (primitive
-    (unit)))
+    (unit))
 
 ===
 boolean true
@@ -13,8 +12,7 @@ boolean true
 true
 ---
 (source_file
-  (primitive
-    (boolean)))
+    (boolean))
 
 ===
 boolean false
@@ -22,8 +20,7 @@ boolean false
 false
 ---
 (source_file
-  (primitive
-    (boolean)))
+    (boolean))
 
 ===
 byte literal
@@ -31,8 +28,7 @@ byte literal
 b'\xff'
 ---
 (source_file
-  (primitive
-    (byte)))
+    (byte))
 
 ===
 char literal
@@ -40,8 +36,7 @@ char literal
 '今'
 ---
 (source_file
-  (primitive
-    (char)))
+    (char))
 
 ===
 integer literal
@@ -49,8 +44,7 @@ integer literal
 42
 ---
 (source_file
-  (primitive
-    (integer)))
+    (integer))
 
 ===
 float literal
@@ -58,8 +52,7 @@ float literal
 3.1418
 ---
 (source_file
-  (primitive
-    (float)))
+    (float))
 
 ===
 static string
@@ -67,5 +60,4 @@ static string
 "Hello World"
 ---
 (source_file
-  (primitive
-    (static_string)))
+    (static_string))

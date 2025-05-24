@@ -15,7 +15,15 @@ module.exports = grammar({
 
     _item: $ => choice(
       $.use_declaration,
-      $.primitive,
+      $._expression, // Allow expressions as top-level items
+    ),
+
+    // General expression rule
+    _expression: $ => choice(
+      $._primitive,
+      $.vector,
+      $.identifier
+      // Future expression types can be added here
     ),
 
     use_declaration: $ => seq(
@@ -36,7 +44,7 @@ module.exports = grammar({
 
     // According to https://rune-rs.github.io/book/primitives.html,
     // type hashes are primitive type, but not sure how they are represented.
-    primitive: $ => choice(
+    _primitive: $ => choice(
       $.unit,
       $.boolean,
       $.byte,
@@ -48,10 +56,21 @@ module.exports = grammar({
 
     unit: $ => token(seq("(", ")")),
     boolean: $ => choice("true", "false"),
-    byte: $ => token(seq("b'", /[^']+/, "'")),
+    byte: $ => token(seq("b'", /[^']*/, "'")),
     char: $ => token(seq("'", /[^']+/, "'")),
     integer: $ => /[0-9]+/,
     float: $ => /[0-9]+\.[0-9]+/,
     static_string: $ => token(seq('"', /[^"]*/, '"')),
+
+    // Vector rule: e.g., ["hello", 42, true]
+    vector: $ => seq(
+      "[",
+      optional(seq(
+        $._expression,
+        repeat(seq(",", $._expression)),
+        optional(",") // Optional trailing comma
+      )),
+      "]"
+    ),
   }
 });
