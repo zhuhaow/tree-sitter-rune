@@ -15,6 +15,7 @@ module.exports = grammar({
 
     _item: $ => choice(
       $.use_declaration,
+      $.struct_declaration, // Added struct_declaration
       $._expression, // Allow expressions as top-level items
     ),
 
@@ -96,6 +97,19 @@ module.exports = grammar({
         )
       ),
       ")"
+    ),
+
+    // Struct declaration rule: e.g., struct User { username, active, }
+    struct_declaration: $ => seq(
+      "struct",
+      field("name", $.identifier),
+      "{",
+      optional(seq(
+        field("field", $.identifier),
+        repeat(seq(",", field("field", $.identifier))),
+        optional(",") // Optional trailing comma for fields
+      )),
+      "}"
     ),
   }
 });

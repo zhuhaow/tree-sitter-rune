@@ -1,0 +1,64 @@
+===
+Struct Declaration with no fields
+===
+
+struct Empty {}
+
+---
+
+(source_file
+  (struct_declaration
+    name: (identifier)))
+
+===
+Struct Declaration with one field
+===
+
+struct User {
+    username
+}
+
+---
+
+(source_file
+  (struct_declaration
+    name: (identifier)
+    field: (identifier)))
+
+===
+Struct Declaration with multiple fields
+===
+
+struct Point {
+    x,
+    y,
+    z
+}
+
+---
+
+(source_file
+  (struct_declaration
+    name: (identifier)
+    field: (identifier)
+    field: (identifier)
+    field: (identifier)))
+
+===
+Struct Declaration with multiple fields and trailing comma
+===
+
+struct Color {
+    red,
+    green,
+    blue,
+}
+
+---
+
+(source_file
+  (struct_declaration
+    name: (identifier)
+    field: (identifier)
+    field: (identifier)
+    field: (identifier)))
