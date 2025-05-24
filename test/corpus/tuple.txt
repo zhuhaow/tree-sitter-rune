@@ -1,0 +1,83 @@
+===
+Empty Tuple (specific syntax)
+===
+
+(,)
+
+---
+(source_file
+  (tuple))
+
+===
+Tuple with one integer
+===
+
+(1,)
+
+---
+
+(source_file
+  (tuple
+    (integer)))
+
+===
+Tuple with multiple primitives
+===
+
+("Now", "You", "See", "Me")
+
+---
+
+(source_file
+  (tuple
+    (static_string)
+    (static_string)
+    (static_string)
+    (static_string)))
+
+===
+Tuple with trailing comma
+===
+
+(1, 2, )
+
+---
+
+(source_file
+  (tuple
+    (integer)
+    (integer)))
+
+===
+Tuple with nested tuple
+===
+
+((1, 2), ("a", "b"))
+
+---
+
+(source_file
+  (tuple
+    (tuple
+      (integer)
+      (integer))
+    (tuple
+      (static_string)
+      (static_string))))
+
+===
+Tuple with mixed types and trailing comma
+===
+
+(false, "test", 123, (true, "nested"), )
+
+---
+
+(source_file
+  (tuple
+    (boolean)
+    (static_string)
+    (integer)
+    (tuple
+      (boolean)
+      (static_string))))

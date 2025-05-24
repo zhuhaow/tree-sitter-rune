@@ -22,7 +22,8 @@ module.exports = grammar({
     _expression: $ => choice(
       $._primitive,
       $.vector,
-      $.object_literal, // Added object_literal
+      $.object_literal,
+      $.tuple, // Added tuple
       $.identifier
       // Future expression types can be added here
     ),
@@ -80,5 +81,21 @@ module.exports = grammar({
       "{",
       "}"
     )),
+
+    _empty_tuple_marker: $ => ",",
+
+    // Tuple rule: e.g., ("hello", 42, true), or (,) for empty
+    tuple: $ => seq(
+      "(",
+      choice(
+        $._empty_tuple_marker,
+        seq(
+          $._expression,
+          repeat(seq(",", $._expression)),
+          optional(",")
+        )
+      ),
+      ")"
+    ),
   }
 });
