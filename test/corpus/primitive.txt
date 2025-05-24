@@ -1,0 +1,71 @@
+===
+unit type
+===
+()
+---
+(source_file
+  (primitive
+    (unit)))
+
+===
+boolean true
+===
+true
+---
+(source_file
+  (primitive
+    (boolean)))
+
+===
+boolean false
+===
+false
+---
+(source_file
+  (primitive
+    (boolean)))
+
+===
+byte literal
+===
+b'\xff'
+---
+(source_file
+  (primitive
+    (byte)))
+
+===
+char literal
+===
+'今'
+---
+(source_file
+  (primitive
+    (char)))
+
+===
+integer literal
+===
+42
+---
+(source_file
+  (primitive
+    (integer)))
+
+===
+float literal
+===
+3.1418
+---
+(source_file
+  (primitive
+    (float)))
+
+===
+static string
+===
+"Hello World"
+---
+(source_file
+  (primitive
+    (static_string)))

@@ -15,6 +15,7 @@ module.exports = grammar({
 
     _item: $ => choice(
       $.use_declaration,
+      $.primitive,
     ),
 
     use_declaration: $ => seq(
@@ -32,5 +33,25 @@ module.exports = grammar({
     ),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+
+    // According to https://rune-rs.github.io/book/primitives.html,
+    // type hashes are primitive type, but not sure how they are represented.
+    primitive: $ => choice(
+      $.unit,
+      $.boolean,
+      $.byte,
+      $.char,
+      $.integer,
+      $.float,
+      $.static_string,
+    ),
+
+    unit: $ => token(seq("(", ")")),
+    boolean: $ => choice("true", "false"),
+    byte: $ => token(seq("b'", /[^']+/, "'")),
+    char: $ => token(seq("'", /[^']+/, "'")),
+    integer: $ => /[0-9]+/,
+    float: $ => /[0-9]+\.[0-9]+/,
+    static_string: $ => token(seq('"', /[^"]*/, '"')),
   }
 });
