@@ -139,7 +139,7 @@ Some
 ---
 
 (source_file
-  (identifier))
+  (path))
 
 ===
 Option Enum (Special Case - None)
@@ -150,4 +150,4 @@ None
 ---
 
 (source_file
-  (identifier))
+  (path))
