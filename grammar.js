@@ -371,7 +371,7 @@ module.exports = grammar({
       ),
 
     macro_invocation: ($) =>
-      prec.left(
+      prec.right(
         "call",
         seq(
           field("macro", $.path),

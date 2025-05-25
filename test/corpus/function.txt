@@ -1,0 +1,86 @@
+===
+Simple Function Declaration
+===
+
+fn add(a, b) {
+  a + b
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier))
+      (parameter
+        name: (identifier)))
+    body: (block
+      (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier))))))
+
+===
+Function with Empty Parameters
+===
+
+fn hello() {
+  "Hello, World!"
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (static_string))))
+
+===
+Function with Expression Statement
+===
+
+fn test() {
+  42;
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (expression_statement
+        (integer)))))
+
+===
+Async Function Declaration
+===
+
+async fn fetch(url) {
+  http::get(url).await
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (block
+      (member_expression
+        object: (call_expression
+          function: (path
+            (identifier)
+            (identifier))
+          arguments: (argument_list
+            (path
+              (identifier))))
+        property: (await_keyword)))))

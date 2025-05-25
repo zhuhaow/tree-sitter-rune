@@ -1561,7 +1561,7 @@
       }
     },
     "macro_invocation": {
-      "type": "PREC_LEFT",
+      "type": "PREC_RIGHT",
       "value": "call",
       "content": {
         "type": "SEQ",
