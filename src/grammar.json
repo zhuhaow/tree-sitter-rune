@@ -1672,9 +1672,7 @@
       {
         "type": "STRING",
         "value": "index"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "unary_not"
@@ -1682,63 +1680,43 @@
       {
         "type": "STRING",
         "value": "unary_neg"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_mul_div_mod"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_add_sub"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_shift"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_compare"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_eq_neq"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_bitwise_and"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_bitwise_xor"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_bitwise_or"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_logical_and"
-      }
-    ],
-    [
+      },
       {
         "type": "STRING",
         "value": "binary_logical_or"

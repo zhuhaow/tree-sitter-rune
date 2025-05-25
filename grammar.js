@@ -16,18 +16,23 @@ module.exports = grammar({
   ],
 
   precedences: ($) => [
-    ["call", "member", "index"], // Highest: call, member access, indexing
-    ["unary_not", "unary_neg"], // Then unary operators
-    ["binary_mul_div_mod"], // Then multiplicative binary ops
-    ["binary_add_sub"], // Then additive binary ops
-    ["binary_shift"], // Then shift ops
-    ["binary_compare"], // Then comparison ops (non-equality)
-    ["binary_eq_neq"], // Then equality ops
-    ["binary_bitwise_and"], // Then bitwise AND
-    ["binary_bitwise_xor"], // Then bitwise XOR
-    ["binary_bitwise_or"], // Then bitwise OR
-    ["binary_logical_and"], // Then logical AND
-    ["binary_logical_or"], // Then logical OR
+    [
+      "call",
+      "member",
+      "index", // Highest: call, member access, indexing
+      "unary_not",
+      "unary_neg", // Then unary operators
+      "binary_mul_div_mod", // Then multiplicative binary ops
+      "binary_add_sub", // Then additive binary ops
+      "binary_shift", // Then shift ops
+      "binary_compare", // Then comparison ops (non-equality)
+      "binary_eq_neq", // Then equality ops
+      "binary_bitwise_and", // Then bitwise AND
+      "binary_bitwise_xor", // Then bitwise XOR
+      "binary_bitwise_or", // Then bitwise OR
+      "binary_logical_and", // Then logical AND
+      "binary_logical_or", // Then logical OR
+    ],
   ],
 
   supertypes: ($) => [$._expression, $._statement],
