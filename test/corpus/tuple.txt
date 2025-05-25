@@ -2,82 +2,118 @@
 Empty Tuple (specific syntax)
 ===
 
-(,)
+fn test() {
+  (,)
+}
 
 ---
 (source_file
-  (tuple))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (tuple))))
 
 ===
 Tuple with one integer
 ===
 
-(1,)
+fn test() {
+  (1,)
+}
 
 ---
 
 (source_file
-  (tuple
-    (integer)))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (tuple
+        (integer)))))
 
 ===
 Tuple with multiple primitives
 ===
 
-("Now", "You", "See", "Me")
+fn test() {
+  ("Now", "You", "See", "Me")
+}
 
 ---
 
 (source_file
-  (tuple
-    (static_string)
-    (static_string)
-    (static_string)
-    (static_string)))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (tuple
+        (static_string)
+        (static_string)
+        (static_string)
+        (static_string)))))
 
 ===
 Tuple with trailing comma
 ===
 
-(1, 2, )
+fn test() {
+  (1, 2, )
+}
 
 ---
 
 (source_file
-  (tuple
-    (integer)
-    (integer)))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (tuple
+        (integer)
+        (integer)))))
 
 ===
 Tuple with nested tuple
 ===
 
-((1, 2), ("a", "b"))
+fn test() {
+  ((1, 2), ("a", "b"))
+}
 
 ---
 
 (source_file
-  (tuple
-    (tuple
-      (integer)
-      (integer))
-    (tuple
-      (static_string)
-      (static_string))))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (tuple
+        (tuple
+          (integer)
+          (integer))
+        (tuple
+          (static_string)
+          (static_string))))))
 
 ===
 Tuple with mixed types and trailing comma
 ===
 
-(false, "test", 123, (true, "nested"), )
+fn test() {
+  (false, "test", 123, (true, "nested"), )
+}
 
 ---
 
 (source_file
-  (tuple
-    (boolean)
-    (static_string)
-    (integer)
-    (tuple
-      (boolean)
-      (static_string))))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (tuple
+        (boolean)
+        (static_string)
+        (integer)
+        (tuple
+          (boolean)
+          (static_string))))))

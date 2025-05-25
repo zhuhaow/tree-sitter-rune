@@ -30,15 +30,67 @@ module.exports = grammar({
     ["binary_logical_or"], // Then logical OR
   ],
 
+  supertypes: ($) => [$._expression, $._statement],
+
+  inline: ($) => [$._statement_block],
+
+  word: ($) => $.identifier,
 
   rules: {
     source_file: ($) => repeat($._item),
 
     _item: ($) =>
+      $._declaration,
+
+    _declaration: ($) =>
       choice(
         $.use_declaration,
         $.struct_declaration,
         $.enum_declaration,
+        $.fn_declaration
+      ),
+
+    // Function declaration rule: e.g., fn add(a, b) { a + b }
+    fn_declaration: ($) =>
+      seq(
+        optional("async"),
+        "fn",
+        field("name", $.identifier),
+        field("parameters", $.parameter_list),
+        field("body", $.block)
+      ),
+
+    parameter_list: ($) =>
+      seq(
+        "(",
+        optional(
+          seq(
+            $.parameter,
+            repeat(seq(",", $.parameter)),
+            optional(",") // Optional trailing comma
+          )
+        ),
+        ")"
+      ),
+
+    parameter: ($) =>
+      field("name", $.identifier),
+
+    block: ($) =>
+      seq(
+        "{",
+        optional($._statement_block),
+        "}"
+      ),
+
+    _statement: ($) => choice($.expression_statement),
+
+    expression_statement: ($) => seq($._expression, ";"),
+
+    _statement_block: ($) =>
+      choice(
+        seq(repeat1($._statement), optional($._expression)),
+        $._expression
       ),
 
     _expression: ($) =>

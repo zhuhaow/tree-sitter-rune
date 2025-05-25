@@ -2,82 +2,118 @@
 Empty Vector
 ===
 
-[]
+fn test() {
+  []
+}
 
 ---
 
 (source_file
-  (vector))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (vector))))
 
 ===
 Vector with one integer
 ===
 
-[1]
+fn test() {
+  [1]
+}
 
 ---
 
 (source_file
-  (vector
-    (integer)))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (vector
+        (integer)))))
 
 ===
 Vector with multiple primitives
 ===
 
-["hello", 42, true]
+fn test() {
+  ["hello", 42, true]
+}
 
 ---
 
 (source_file
-  (vector
-    (static_string)
-    (integer)
-    (boolean)))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (vector
+        (static_string)
+        (integer)
+        (boolean)))))
 
 ===
 Vector with trailing comma
 ===
 
-[1, 2, ]
+fn test() {
+  [1, 2, ]
+}
 
 ---
 
 (source_file
-  (vector
-    (integer)
-    (integer)))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (vector
+        (integer)
+        (integer)))))
 
 ===
 Vector with nested vector
 ===
 
-[[1, 2], ["a", "b"]]
+fn test() {
+  [[1, 2], ["a", "b"]]
+}
 
 ---
 
 (source_file
-  (vector
-    (vector
-      (integer)
-      (integer))
-    (vector
-      (static_string)
-      (static_string))))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (vector
+        (vector
+          (integer)
+          (integer))
+        (vector
+          (static_string)
+          (static_string))))))
 
 ===
 Vector with mixed types and trailing comma
 ===
 
-[false, "test", 123, [true, "nested"], ]
+fn test() {
+  [false, "test", 123, [true, "nested"], ]
+}
 
 ---
 
 (source_file
-  (vector
-    (boolean)
-    (static_string)
-    (integer)
-    (vector
-      (boolean)
-      (static_string))))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (vector
+        (boolean)
+        (static_string)
+        (integer)
+        (vector
+          (boolean)
+          (static_string))))))

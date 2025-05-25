@@ -1,63 +1,111 @@
 ===
 unit type
 ===
-()
+fn test() {
+  ()
+}
 ---
 (source_file
-    (unit))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (unit))))
 
 ===
 boolean true
 ===
-true
+fn test() {
+  true
+}
 ---
 (source_file
-    (boolean))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (boolean))))
 
 ===
 boolean false
 ===
-false
+fn test() {
+  false
+}
 ---
 (source_file
-    (boolean))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (boolean))))
 
 ===
 byte literal
 ===
-b'\xff'
+fn test() {
+  b'\xff'
+}
 ---
 (source_file
-    (byte))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (byte))))
 
 ===
 char literal
 ===
-'今'
+fn test() {
+  '今'
+}
 ---
 (source_file
-    (char))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (char))))
 
 ===
 integer literal
 ===
-42
+fn test() {
+  42
+}
 ---
 (source_file
-    (integer))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (integer))))
 
 ===
 float literal
 ===
-3.1418
+fn test() {
+  3.1418
+}
 ---
 (source_file
-    (float))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (float))))
 
 ===
 static string
 ===
-"Hello World"
+fn test() {
+  "Hello World"
+}
 ---
 (source_file
-    (static_string))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (static_string))))

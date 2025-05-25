@@ -2,44 +2,63 @@
 Empty Object Literal
 ===
 
-#{}
+fn test() {
+  #{}
+}
 
 ---
 
 (source_file
-  (object_literal))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (object_literal))))
 
 ===
 Object Literal with Key-Value Pairs
 ===
 
-#{ "foo": 42, bar: "baz", "qux-quux": true }
+fn test() {
+  #{ "foo": 42, bar: "baz", "qux-quux": true }
+}
 
 ---
 
 (source_file
-  (object_literal
-    (object_entry
-      (static_string)
-      (integer))
-    (object_entry
-      (identifier)
-      (static_string))
-    (object_entry
-      (static_string)
-      (boolean))))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (object_literal
+        (object_entry
+          (static_string)
+          (integer))
+        (object_entry
+          (path
+            (identifier))
+          (static_string))
+        (object_entry
+          (static_string)
+          (boolean))))))
 
 ===
 Object Literal with Trailing Comma
 ===
 
-#{ "foo": 42, }
+fn test() {
+  #{ "foo": 42, }
+}
 
 ---
 
 (source_file
-  (object_literal
-    (object_entry
-      (static_string)
-      (integer))))
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (object_literal
+        (object_entry
+          (static_string)
+          (integer))))))
 
