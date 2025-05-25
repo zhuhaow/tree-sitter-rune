@@ -50,13 +50,13 @@ fn calculate() {
     body: (block
       (return_statement
         (binary_expression
-          left: (binary_expression
+          left: (path
+            (identifier))
+          right: (binary_expression
             left: (path
               (identifier))
             right: (path
-              (identifier)))
-          right: (path
-            (identifier)))))))
+              (identifier))))))))
 
 ===
 Complex Return Statement
@@ -76,20 +76,20 @@ fn complex_calculation() {
       (return_statement
         (binary_expression
           left: (binary_expression
-            left: (binary_expression
-              left: (parenthesized_expression
-                (binary_expression
-                  left: (path
-                    (identifier))
-                  right: (path
-                    (identifier))))
-              right: (parenthesized_expression
-                (binary_expression
-                  left: (path
-                    (identifier))
-                  right: (path
-                    (identifier)))))
+            left: (parenthesized_expression
+              (binary_expression
+                left: (path
+                  (identifier))
+                right: (path
+                  (identifier))))
+            right: (parenthesized_expression
+              (binary_expression
+                left: (path
+                  (identifier))
+                right: (path
+                  (identifier)))))
+          right: (binary_expression
+            left: (path
+              (identifier))
             right: (path
-              (identifier)))
-          right: (path
-            (identifier)))))))
+              (identifier))))))))
