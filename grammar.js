@@ -39,8 +39,7 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($._item),
 
-    _item: ($) =>
-      $._declaration,
+    _item: ($) => $._declaration,
 
     _declaration: ($) =>
       choice(
@@ -73,15 +72,9 @@ module.exports = grammar({
         ")"
       ),
 
-    parameter: ($) =>
-      field("name", $.identifier),
+    parameter: ($) => field("name", $.identifier),
 
-    block: ($) =>
-      seq(
-        "{",
-        optional($._statement_block),
-        "}"
-      ),
+    block: ($) => seq("{", optional($._statement_block), "}"),
 
     _statement: ($) => choice($.expression_statement),
 
