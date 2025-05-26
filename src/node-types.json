@@ -82,7 +82,15 @@
     "named": true,
     "subtypes": [
       {
+        "type": "const_statement",
+        "named": true
+      },
+      {
         "type": "expression_statement",
+        "named": true
+      },
+      {
+        "type": "let_statement",
         "named": true
       },
       {
@@ -171,6 +179,32 @@
         ]
       },
       "function": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "const_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
         "multiple": false,
         "required": true,
         "types": [
@@ -354,6 +388,32 @@
         ]
       },
       "object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "let_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
         "multiple": false,
         "required": true,
         "types": [
@@ -723,6 +783,10 @@
     "named": false
   },
   {
+    "type": "=",
+    "named": false
+  },
+  {
     "type": "==",
     "named": false
   },
@@ -772,6 +836,10 @@
     "extra": true
   },
   {
+    "type": "const",
+    "named": false
+  },
+  {
     "type": "enum",
     "named": false
   },
@@ -794,6 +862,10 @@
   {
     "type": "integer",
     "named": true
+  },
+  {
+    "type": "let",
+    "named": false
   },
   {
     "type": "return",
