@@ -96,7 +96,8 @@ module.exports = grammar({
         $.expression_statement,
         $.return_statement,
         $.let_statement,
-        $.const_statement
+        $.const_statement,
+        $.compound_assignment_statement
       ),
 
     expression_statement: ($) => seq($._expression, ";"),
@@ -120,6 +121,18 @@ module.exports = grammar({
         field("name", $.identifier),
         "=",
         field("value", $._expression),
+        ";"
+      ),
+
+    // Compound assignment statement: e.g., x += 1; or counter *= 2;
+    compound_assignment_statement: ($) =>
+      seq(
+        field("left", $._expression),
+        field(
+          "operator",
+          choice("+=", "-=", "*=", "/=", "%=", "|=", "&=", "^=", "<<=", ">>=")
+        ),
+        field("right", $._expression),
         ";"
       ),
 
@@ -148,7 +161,8 @@ module.exports = grammar({
 
     use_declaration: ($) => seq("use", $.path, ";"),
 
-    path: ($) => seq($.identifier, repeat(seq("::", $.identifier))),
+    path: ($) =>
+      choice($.identifier, seq($.identifier, repeat1(seq("::", $.identifier)))),
 
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
     await_keyword: ($) => "await",
