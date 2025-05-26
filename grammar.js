@@ -33,6 +33,7 @@ module.exports = grammar({
       "binary_logical_and", // Then logical AND
       "binary_logical_or", // Then logical OR
     ],
+    ["template_chars", "template_interpolation"], // Template literals
   ],
 
   supertypes: ($) => [$._expression, $._statement],
@@ -132,7 +133,8 @@ module.exports = grammar({
         $.call_expression,
         $.member_expression,
         $.index_expression,
-        $.macro_invocation
+        $.macro_invocation,
+        $.template_literal
       ),
 
     use_declaration: ($) => seq("use", $.path, ";"),
@@ -162,6 +164,16 @@ module.exports = grammar({
     integer: ($) => /[0-9]+/,
     float: ($) => /[0-9]+\.[0-9]+/,
     static_string: ($) => token(seq('"', /[^"]*/, '"')),
+
+    // Template literal rule: e.g., `Hello ${name}`
+    template_literal: ($) =>
+      seq("`", repeat(choice($.template_chars, $.template_interpolation)), "`"),
+
+    template_chars: ($) =>
+      token.immediate(prec("template_chars", /[^`$]+|[$][^{]|[$]/)),
+
+    template_interpolation: ($) =>
+      prec("template_interpolation", seq("${", $._expression, "}")),
 
     // Vector rule: e.g., ["hello", 42, true]
     vector: ($) =>
