@@ -1,0 +1,122 @@
+==================
+Simple if expression
+==================
+
+fn test() {
+  if x < 5 {
+    "less than five"
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (if_expression
+        condition: (binary_expression
+          left: (path (identifier))
+          right: (integer))
+        consequence: (block
+          (static_string))))))
+
+==================
+If-else expression
+==================
+
+fn test() {
+  if x < 5 {
+    "less than five"
+  } else {
+    "not less than five"
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (if_expression
+        condition: (binary_expression
+          left: (path (identifier))
+          right: (integer))
+        consequence: (block
+          (static_string))
+        alternative: (block
+          (static_string))))))
+
+==================
+If-else-if-else expression
+==================
+
+fn test() {
+  if x < 5 {
+    "less than five"
+  } else if x > 10 {
+    "more than ten"
+  } else {
+    "between five and ten"
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (if_expression
+        condition: (binary_expression
+          left: (path (identifier))
+          right: (integer))
+        consequence: (block
+          (static_string))
+        alternative: (if_expression
+          condition: (binary_expression
+            left: (path (identifier))
+            right: (integer))
+          consequence: (block
+            (static_string))
+          alternative: (block
+            (static_string)))))))
+
+==================
+Nested if expressions
+==================
+
+fn test() {
+  if a {
+    if b {
+      "a and b"
+    } else {
+      "a but not b"
+    }
+  } else {
+    "not a"
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (if_expression
+        condition: (path (identifier))
+        consequence: (block
+          (if_expression
+            condition: (path (identifier))
+            consequence: (block
+              (static_string))
+            alternative: (block
+              (static_string))))
+        alternative: (block
+          (static_string))))))

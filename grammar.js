@@ -160,7 +160,8 @@ module.exports = grammar({
         $.macro_invocation,
         $.template_literal,
         $.try_expression,
-        $.closure_expression
+        $.closure_expression,
+        $.if_expression
       ),
 
     use_declaration: ($) => seq("use", $.path, ";"),
@@ -479,6 +480,23 @@ module.exports = grammar({
           optional("async"),
           field("parameters", $.closure_parameter_list),
           field("body", choice($._expression, $.block))
+        )
+      ),
+
+    // If expression rule: e.g., if x < 5 { "less than five" } else if x > 10 { "more than ten" } else { "between" }
+    if_expression: ($) =>
+      seq(
+        "if",
+        field("condition", $._expression),
+        field("consequence", $.block),
+        optional(
+          seq(
+            "else",
+            field(
+              "alternative",
+              choice($.if_expression, $.block)
+            )
+          )
         )
       ),
   },
