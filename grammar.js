@@ -38,6 +38,8 @@ module.exports = grammar({
     ["template_chars", "template_interpolation"], // Template literals
   ],
 
+  conflicts: ($) => [[$._expression, $._statement]],
+
   supertypes: ($) => [$._expression, $._statement],
 
   inline: ($) => [$._statement_block],
@@ -99,7 +101,13 @@ module.exports = grammar({
         $.return_statement,
         $.let_statement,
         $.const_statement,
-        $.compound_assignment_statement
+        $.compound_assignment_statement,
+        $.break_statement,
+        $.continue_statement,
+        $.if_expression,
+        $.loop_expression,
+        $.while_expression,
+        $.for_expression
       ),
 
     expression_statement: ($) => seq($._expression, ";"),
@@ -161,7 +169,11 @@ module.exports = grammar({
         $.template_literal,
         $.try_expression,
         $.closure_expression,
-        $.if_expression
+        $.if_expression,
+        $.loop_expression,
+        $.while_expression,
+        $.for_expression,
+        $.range_expression
       ),
 
     use_declaration: ($) => seq("use", $.path, ";"),
@@ -491,6 +503,51 @@ module.exports = grammar({
         field("consequence", $.block),
         optional(
           seq("else", field("alternative", choice($.if_expression, $.block)))
+        )
+      ),
+
+    // Loop expression rule: e.g., loop { if x > 10 { break x; } }
+    loop_expression: ($) => seq("loop", field("body", $.block)),
+
+    // While expression rule: e.g., while x < 10 { if x == 5 { break x; } x += 1; }
+    while_expression: ($) =>
+      seq("while", field("condition", $._expression), field("body", $.block)),
+
+    // For expression rule: e.g., for x in collection { total += x; break total; }
+    // Can also use range expressions: e.g., for i in 0..10 { ... }
+    for_expression: ($) =>
+      seq(
+        "for",
+        field("pattern", $.identifier),
+        "in",
+        field("iterator", $._expression),
+        field("body", $.block)
+      ),
+
+    // Break statement rule: e.g., break; or break value;
+    break_statement: ($) => seq("break", optional($._expression), ";"),
+
+    // Continue statement rule: e.g., continue;
+    continue_statement: ($) => seq("continue", ";"),
+
+    // Range expression rule:
+    // Half-open ranges: e.g., a..b, a.., ..b, ..
+    // Closed/inclusive ranges: e.g., a..=b, ..=b
+    range_expression: ($) =>
+      choice(
+        prec.left(
+          seq(
+            field("start", optional($._expression)),
+            "..",
+            field("end", optional($._expression))
+          )
+        ),
+        prec.left(
+          seq(
+            field("start", optional($._expression)),
+            "..=",
+            field("end", $._expression)
+          )
         )
       ),
   },

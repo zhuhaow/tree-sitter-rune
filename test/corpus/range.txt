@@ -1,0 +1,128 @@
+==================
+Half-open range expressions
+==================
+
+fn test_half_open_ranges() {
+  let full_range = start..end;
+  let from_start = start..;
+  let to_end = ..end;
+  let full_unbounded = ..;
+
+  for i in 0..10 {
+    println!(i);
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (let_statement
+        name: (identifier)
+        value: (range_expression
+          start: (path
+            (identifier))
+          end: (path
+            (identifier))))
+      (let_statement
+        name: (identifier)
+        value: (range_expression
+          start: (path
+            (identifier))))
+      (let_statement
+        name: (identifier)
+        value: (range_expression
+          end: (path
+            (identifier))))
+      (let_statement
+        name: (identifier)
+        value: (range_expression))
+      (for_expression
+        pattern: (identifier)
+        iterator: (range_expression
+          start: (integer)
+          end: (integer))
+        body: (block
+          (expression_statement
+            (macro_invocation
+              macro: (path
+                (identifier))
+              arguments: (argument_list
+                (path
+                  (identifier))))))))))
+
+==================
+Closed/inclusive range expressions
+==================
+
+fn test_closed_ranges() {
+  let inclusive_range = start..=end;
+  let to_end_inclusive = ..=end;
+
+  for i in 1..=5 {
+    println!(i);
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (let_statement
+        name: (identifier)
+        value: (range_expression
+          start: (path
+            (identifier))
+          end: (path
+            (identifier))))
+      (let_statement
+        name: (identifier)
+        value: (range_expression
+          end: (path
+            (identifier))))
+      (for_expression
+        pattern: (identifier)
+        iterator: (range_expression
+          start: (integer)
+          end: (integer))
+        body: (block
+          (expression_statement
+            (macro_invocation
+              macro: (path
+                (identifier))
+              arguments: (argument_list
+                (path
+                  (identifier))))))))))
+
+==================
+Range expressions as statements
+==================
+
+fn range_as_statement() {
+  0..10;
+  a..=b;
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (expression_statement
+        (range_expression
+          start: (integer)
+          end: (integer)))
+      (expression_statement
+        (range_expression
+          start: (path
+            (identifier))
+          end: (path
+            (identifier)))))))
