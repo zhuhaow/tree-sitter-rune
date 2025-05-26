@@ -81,34 +81,37 @@ module.exports = grammar({
 
     block: ($) => seq("{", optional($._statement_block), "}"),
 
-    _statement: ($) => choice(
-      $.expression_statement, 
-      $.return_statement,
-      $.let_statement,
-      $.const_statement
-    ),
+    _statement: ($) =>
+      choice(
+        $.expression_statement,
+        $.return_statement,
+        $.let_statement,
+        $.const_statement
+      ),
 
     expression_statement: ($) => seq($._expression, ";"),
 
     return_statement: ($) => seq("return", optional($._expression), ";"),
 
     // Let statement rule: e.g., let x = 42;
-    let_statement: ($) => seq(
-      "let",
-      field("name", $.identifier),
-      "=",
-      field("value", $._expression),
-      ";"
-    ),
+    let_statement: ($) =>
+      seq(
+        "let",
+        field("name", $.identifier),
+        "=",
+        field("value", $._expression),
+        ";"
+      ),
 
     // Const statement rule: e.g., const PI = 3.14;
-    const_statement: ($) => seq(
-      "const",
-      field("name", $.identifier),
-      "=",
-      field("value", $._expression),
-      ";"
-    ),
+    const_statement: ($) =>
+      seq(
+        "const",
+        field("name", $.identifier),
+        "=",
+        field("value", $._expression),
+        ";"
+      ),
 
     _statement_block: ($) =>
       choice(
