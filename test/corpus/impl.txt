@@ -1,0 +1,119 @@
+==================
+Basic implementation
+==================
+
+impl Foo {
+    fn new() {
+        Foo
+    }
+}
+
+---
+
+(source_file
+  (impl_declaration
+    (path
+      (identifier))
+    (fn_declaration
+      (identifier)
+      (parameter_list)
+      (block
+        (path
+          (identifier))))))
+
+==================
+Implementation with multiple methods
+==================
+
+impl Calculator {
+    fn add(a, b) {
+        a + b
+    }
+
+    fn subtract(a, b) {
+        a - b
+    }
+
+    fn multiply(a, b) {
+        a * b
+    }
+}
+
+---
+
+(source_file
+  (impl_declaration
+    (path
+      (identifier))
+    (fn_declaration
+      (identifier)
+      (parameter_list
+        (parameter
+          (identifier))
+        (parameter
+          (identifier)))
+      (block
+        (binary_expression
+          (path
+            (identifier))
+          (path
+            (identifier)))))
+    (fn_declaration
+      (identifier)
+      (parameter_list
+        (parameter
+          (identifier))
+        (parameter
+          (identifier)))
+      (block
+        (binary_expression
+          (path
+            (identifier))
+          (path
+            (identifier)))))
+    (fn_declaration
+      (identifier)
+      (parameter_list
+        (parameter
+          (identifier))
+        (parameter
+          (identifier)))
+      (block
+        (binary_expression
+          (path
+            (identifier))
+          (path
+            (identifier)))))))
+
+==================
+Implementation with async methods
+==================
+
+impl HttpClient {
+    async fn fetch(url) {
+        http.get(url).await
+    }
+}
+
+---
+
+(source_file
+  (impl_declaration
+    (path
+      (identifier))
+    (fn_declaration
+      (identifier)
+      (parameter_list
+        (parameter
+          (identifier)))
+      (block
+        (member_expression
+          (call_expression
+            (member_expression
+              (path
+                (identifier))
+              (identifier))
+            (argument_list
+              (path
+                (identifier))))
+          (await_keyword))))))

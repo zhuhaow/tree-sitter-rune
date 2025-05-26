@@ -378,6 +378,40 @@
     }
   },
   {
+    "type": "impl_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "fn_declaration",
+            "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "index_expression",
     "named": true,
     "fields": {
@@ -606,6 +640,10 @@
         },
         {
           "type": "fn_declaration",
+          "named": true
+        },
+        {
+          "type": "impl_declaration",
           "named": true
         },
         {
@@ -904,6 +942,10 @@
   {
     "type": "identifier",
     "named": true
+  },
+  {
+    "type": "impl",
+    "named": false
   },
   {
     "type": "integer",

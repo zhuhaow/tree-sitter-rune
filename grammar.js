@@ -52,7 +52,8 @@ module.exports = grammar({
         $.use_declaration,
         $.struct_declaration,
         $.enum_declaration,
-        $.fn_declaration
+        $.fn_declaration,
+        $.impl_declaration
       ),
 
     // Function declaration rule: e.g., fn add(a, b) { a + b }
@@ -63,6 +64,14 @@ module.exports = grammar({
         field("name", $.identifier),
         field("parameters", $.parameter_list),
         field("body", $.block)
+      ),
+
+    // Implementation block rule: e.g., impl Foo { fn new() { Foo } }
+    impl_declaration: ($) =>
+      seq(
+        "impl",
+        field("name", $.path),
+        field("body", seq("{", repeat($.fn_declaration), "}"))
       ),
 
     parameter_list: ($) =>
