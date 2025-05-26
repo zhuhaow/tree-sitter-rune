@@ -33,6 +33,7 @@ module.exports = grammar({
       "binary_bitwise_or", // Then bitwise OR
       "binary_logical_and", // Then logical AND
       "binary_logical_or", // Then logical OR
+      "closure", // Lowest: closure expressions
     ],
     ["template_chars", "template_interpolation"], // Template literals
   ],
@@ -158,7 +159,8 @@ module.exports = grammar({
         $.index_expression,
         $.macro_invocation,
         $.template_literal,
-        $.try_expression
+        $.try_expression,
+        $.closure_expression
       ),
 
     use_declaration: ($) => seq("use", $.path, ";"),
@@ -454,5 +456,30 @@ module.exports = grammar({
     // Try operator (?) for error handling: e.g., let result = parse(input)?;
     try_expression: ($) =>
       prec.left("try", seq(field("expression", $._expression), "?")),
+
+    // Closure parameters are similar to function parameters but enclosed in vertical bars
+    closure_parameter_list: ($) =>
+      seq(
+        "|",
+        optional(
+          seq(
+            $.parameter,
+            repeat(seq(",", $.parameter)),
+            optional(",") // Optional trailing comma
+          )
+        ),
+        "|"
+      ),
+
+    // Closure expression: e.g., |a, b| n + a + b or async || { Ok(http::get(url).await?.status()) }
+    closure_expression: ($) =>
+      prec.right(
+        "closure",
+        seq(
+          optional("async"),
+          field("parameters", $.closure_parameter_list),
+          field("body", choice($._expression, $.block))
+        )
+      ),
   },
 });
