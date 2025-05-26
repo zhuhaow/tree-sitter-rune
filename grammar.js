@@ -20,8 +20,9 @@ module.exports = grammar({
       "call",
       "member",
       "index", // Highest: call, member access, indexing
+      "try", // Then try operator
       "unary_not",
-      "unary_neg", // Then unary operators
+      "unary_neg", // Then other unary operators
       "binary_mul_div_mod", // Then multiplicative binary ops
       "binary_add_sub", // Then additive binary ops
       "binary_shift", // Then shift ops
@@ -156,7 +157,8 @@ module.exports = grammar({
         $.member_expression,
         $.index_expression,
         $.macro_invocation,
-        $.template_literal
+        $.template_literal,
+        $.try_expression
       ),
 
     use_declaration: ($) => seq("use", $.path, ";"),
@@ -448,5 +450,9 @@ module.exports = grammar({
           seq("/*", repeat(choice(/[^\*]/, /\*[^/]/)), "*/")
         )
       ),
+
+    // Try operator (?) for error handling: e.g., let result = parse(input)?;
+    try_expression: ($) =>
+      prec.left("try", seq(field("expression", $._expression), "?")),
   },
 });

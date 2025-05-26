@@ -506,6 +506,10 @@
         {
           "type": "SYMBOL",
           "name": "template_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "try_expression"
         }
       ]
     },
@@ -1946,6 +1950,27 @@
           }
         ]
       }
+    },
+    "try_expression": {
+      "type": "PREC_LEFT",
+      "value": "try",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "expression",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "?"
+          }
+        ]
+      }
     }
   },
   "extras": [
@@ -1972,6 +1997,10 @@
       {
         "type": "STRING",
         "value": "index"
+      },
+      {
+        "type": "STRING",
+        "value": "try"
       },
       {
         "type": "STRING",

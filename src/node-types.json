@@ -64,6 +64,10 @@
         "named": true
       },
       {
+        "type": "try_expression",
+        "named": true
+      },
+      {
         "type": "tuple",
         "named": true
       },
@@ -794,6 +798,22 @@
     }
   },
   {
+    "type": "try_expression",
+    "named": true,
+    "fields": {
+      "expression": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "tuple",
     "named": true,
     "fields": {},
@@ -988,6 +1008,10 @@
   },
   {
     "type": ">>=",
+    "named": false
+  },
+  {
+    "type": "?",
     "named": false
   },
   {
