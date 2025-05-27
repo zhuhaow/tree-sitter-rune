@@ -41,7 +41,7 @@ module.exports = grammar({
   conflicts: ($) => [
     [$._expression, $._statement],
     [$.path, $.identifier_pattern],
-    [$.struct_pattern, $.enum_variant_pattern]
+    [$.struct_pattern, $.enum_variant_pattern],
   ],
 
   supertypes: ($) => [$._expression, $._statement],
@@ -615,7 +615,8 @@ module.exports = grammar({
       ),
 
     // Literal pattern: numbers, strings, booleans
-    literal_pattern: ($) => choice($.integer, $.float, $.static_string, $.boolean, $.char),
+    literal_pattern: ($) =>
+      choice($.integer, $.float, $.static_string, $.boolean, $.char),
 
     // Identifier pattern (variable binding): e.g., x
     identifier_pattern: ($) => $.identifier,
@@ -630,11 +631,7 @@ module.exports = grammar({
         choice(
           $._empty_tuple_marker,
           seq($.pattern, ","),
-          seq(
-            $.pattern,
-            repeat1(seq(",", $.pattern)),
-            optional(",")
-          )
+          seq($.pattern, repeat1(seq(",", $.pattern)), optional(","))
         ),
         ")"
       ),
@@ -669,11 +666,7 @@ module.exports = grammar({
 
     // Struct pattern field: e.g., x: 42
     struct_pattern_field: ($) =>
-      seq(
-        field("name", $.identifier),
-        ":",
-        field("pattern", $.pattern)
-      ),
+      seq(field("name", $.identifier), ":", field("pattern", $.pattern)),
 
     // Struct pattern shorthand: e.g., x (equivalent to x: x)
     struct_pattern_shorthand: ($) => field("name", $.identifier),
@@ -691,11 +684,7 @@ module.exports = grammar({
             seq(
               "(",
               optional(
-                seq(
-                  $.pattern,
-                  repeat(seq(",", $.pattern)),
-                  optional(",")
-                )
+                seq($.pattern, repeat(seq(",", $.pattern)), optional(","))
               ),
               ")"
             ),
@@ -738,11 +727,29 @@ module.exports = grammar({
 
     // Or pattern: e.g., 1 | 2 | 3
     or_pattern: ($) =>
-      prec.left(1, 
+      prec.left(
+        1,
         seq(
-          field("left", choice($.literal_pattern, $.identifier_pattern, $.wildcard_pattern, $.tuple_pattern)),
+          field(
+            "left",
+            choice(
+              $.literal_pattern,
+              $.identifier_pattern,
+              $.wildcard_pattern,
+              $.tuple_pattern
+            )
+          ),
           "|",
-          field("right", choice($.pattern, $.literal_pattern, $.identifier_pattern, $.wildcard_pattern, $.tuple_pattern))
+          field(
+            "right",
+            choice(
+              $.pattern,
+              $.literal_pattern,
+              $.identifier_pattern,
+              $.wildcard_pattern,
+              $.tuple_pattern
+            )
+          )
         )
       ),
   },
