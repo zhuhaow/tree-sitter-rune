@@ -11,8 +11,17 @@
       }
     },
     "_item": {
-      "type": "SYMBOL",
-      "name": "_declaration"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_statement"
+        }
+      ]
     },
     "_declaration": {
       "type": "CHOICE",

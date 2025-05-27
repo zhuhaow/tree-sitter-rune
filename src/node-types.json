@@ -1389,6 +1389,10 @@
       "required": false,
       "types": [
         {
+          "type": "_statement",
+          "named": true
+        },
+        {
           "type": "enum_declaration",
           "named": true
         },

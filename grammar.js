@@ -53,7 +53,7 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($._item),
 
-    _item: ($) => $._declaration,
+    _item: ($) => choice($._declaration, $._statement),
 
     _declaration: ($) =>
       choice(
