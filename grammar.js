@@ -686,8 +686,8 @@ module.exports = grammar({
               "(",
               optional(
                 seq(
-                  field("pattern", $.pattern), 
-                  repeat(seq(",", field("pattern", $.pattern))), 
+                  field("pattern", $.pattern),
+                  repeat(seq(",", field("pattern", $.pattern))),
                   optional(",")
                 )
               ),
