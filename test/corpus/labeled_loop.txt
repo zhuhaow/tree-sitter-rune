@@ -1,0 +1,180 @@
+==================
+Labeled loop expression
+==================
+
+fn test() {
+  'outer: loop {
+    loop {
+      if condition {
+        break 'outer;
+      }
+    }
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (loop_expression
+        label: (loop_label
+          name: (identifier))
+        body: (block
+          (loop_expression
+            body: (block
+              (if_expression
+                condition: (path
+                  (identifier))
+                consequence: (block
+                  (break_statement
+                    label: (identifier)))))))))))
+
+==================
+Labeled while expression
+==================
+
+fn test_while() {
+  'counting: while count < 10 {
+    if count == 5 {
+      continue 'counting;
+    }
+    count += 1;
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (while_expression
+        label: (loop_label
+          name: (identifier))
+        condition: (binary_expression
+          left: (path
+            (identifier))
+          right: (integer))
+        body: (block
+          (if_expression
+            condition: (binary_expression
+              left: (path
+                (identifier))
+              right: (integer))
+            consequence: (block
+              (continue_statement
+                label: (identifier))))
+          (compound_assignment_statement
+            left: (path
+              (identifier))
+            right: (integer)))))))
+
+==================
+Labeled for expression
+==================
+
+fn test_for() {
+  'items: for item in collection {
+    if item.is_invalid() {
+      continue 'items;
+    }
+
+    if item.is_last() {
+      break 'items item;
+    }
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (for_expression
+        label: (loop_label
+          name: (identifier))
+        pattern: (identifier)
+        iterator: (path
+          (identifier))
+        body: (block
+          (if_expression
+            condition: (call_expression
+              function: (member_expression
+                object: (path
+                  (identifier))
+                property: (identifier))
+              arguments: (argument_list))
+            consequence: (block
+              (continue_statement
+                label: (identifier))))
+          (if_expression
+            condition: (call_expression
+              function: (member_expression
+                object: (path
+                  (identifier))
+                property: (identifier))
+              arguments: (argument_list))
+            consequence: (block
+              (break_statement
+                label: (identifier)
+                (path
+                  (identifier))))))))))
+
+==================
+Nested labeled loops
+==================
+
+fn nested_loops() {
+  'outer: loop {
+    'inner: for i in 0..10 {
+      if i == 5 {
+        break 'outer;
+      }
+      if i == 3 {
+        continue 'inner;
+      }
+    }
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (loop_expression
+        label: (loop_label
+          name: (identifier))
+        body: (block
+          (for_expression
+            label: (loop_label
+              name: (identifier))
+            pattern: (identifier)
+            iterator: (range_expression
+              start: (integer)
+              end: (integer))
+            body: (block
+              (if_expression
+                condition: (binary_expression
+                  left: (path
+                    (identifier))
+                  right: (integer))
+                consequence: (block
+                  (break_statement
+                    label: (identifier))))
+              (if_expression
+                condition: (binary_expression
+                  left: (path
+                    (identifier))
+                  right: (integer))
+                consequence: (block
+                  (continue_statement
+                    label: (identifier)))))))))))

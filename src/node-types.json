@@ -227,7 +227,22 @@
   {
     "type": "break_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "label": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "'",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": false,
@@ -411,7 +426,22 @@
   {
     "type": "continue_statement",
     "named": true,
-    "fields": {}
+    "fields": {
+      "label": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "'",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "enum_declaration",
@@ -594,6 +624,16 @@
           }
         ]
       },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "loop_label",
+            "named": true
+          }
+        ]
+      },
       "pattern": {
         "multiple": false,
         "required": true,
@@ -742,6 +782,32 @@
         "types": [
           {
             "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "loop_label",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "loop_label",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -969,6 +1035,11 @@
     }
   },
   {
+    "type": "static_string",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "struct_declaration",
     "named": true,
     "fields": {
@@ -1128,6 +1199,16 @@
             "named": true
           }
         ]
+      },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "loop_label",
+            "named": true
+          }
+        ]
       }
     }
   },
@@ -1137,6 +1218,10 @@
   },
   {
     "type": "!=",
+    "named": false
+  },
+  {
+    "type": "\"",
     "named": false
   },
   {
@@ -1165,6 +1250,10 @@
   },
   {
     "type": "&=",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -1387,10 +1476,6 @@
   {
     "type": "return",
     "named": false
-  },
-  {
-    "type": "static_string",
-    "named": true
   },
   {
     "type": "struct",

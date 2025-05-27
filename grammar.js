@@ -184,6 +184,9 @@ module.exports = grammar({
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
     await_keyword: ($) => "await",
 
+    // Loop label rule: e.g., 'label: loop { ... }
+    loop_label: ($) => seq("'", field("name", $.identifier), ":"),
+
     // According to https://rune-rs.github.io/book/primitives.html,
     // type hashes are primitive type, but not sure how they are represented.
     _primitive: ($) =>
@@ -200,10 +203,10 @@ module.exports = grammar({
     unit: ($) => token(seq("(", ")")),
     boolean: ($) => choice("true", "false"),
     byte: ($) => token(seq("b'", /[^']*/, "'")),
-    char: ($) => token(seq("'", /[^']+/, "'")),
+    char: ($) => token(seq("'", /[^']/, "'")),
     integer: ($) => /[0-9]+/,
     float: ($) => /[0-9]+\.[0-9]+/,
-    static_string: ($) => token(seq('"', /[^"]*/, '"')),
+    static_string: ($) => seq('"', /[^"]*/, '"'),
 
     // Template literal rule: e.g., `Hello ${name}`
     template_literal: ($) =>
@@ -506,17 +509,28 @@ module.exports = grammar({
         )
       ),
 
-    // Loop expression rule: e.g., loop { if x > 10 { break x; } }
-    loop_expression: ($) => seq("loop", field("body", $.block)),
+    // Loop expression rule: e.g., loop { if x > 10 { break x; } } or 'outer_loop: loop { break 'outer_loop; }
+    loop_expression: ($) =>
+      seq(
+        optional(field("label", $.loop_label)),
+        "loop",
+        field("body", $.block)
+      ),
 
-    // While expression rule: e.g., while x < 10 { if x == 5 { break x; } x += 1; }
+    // While expression rule: e.g., while x < 10 { if x == 5 { break x; } x += 1; } or 'outer_while: while x < 10 { break 'outer_while; }
     while_expression: ($) =>
-      seq("while", field("condition", $._expression), field("body", $.block)),
+      seq(
+        optional(field("label", $.loop_label)),
+        "while",
+        field("condition", $._expression),
+        field("body", $.block)
+      ),
 
-    // For expression rule: e.g., for x in collection { total += x; break total; }
+    // For expression rule: e.g., for x in collection { total += x; break total; } or 'outer_for: for x in collection { break 'outer_for; }
     // Can also use range expressions: e.g., for i in 0..10 { ... }
     for_expression: ($) =>
       seq(
+        optional(field("label", $.loop_label)),
         "for",
         field("pattern", $.identifier),
         "in",
@@ -524,11 +538,18 @@ module.exports = grammar({
         field("body", $.block)
       ),
 
-    // Break statement rule: e.g., break; or break value;
-    break_statement: ($) => seq("break", optional($._expression), ";"),
+    // Break statement rule: e.g., break; or break value; or break 'label; or break 'label value;
+    break_statement: ($) =>
+      seq(
+        "break",
+        optional(field("label", seq("'", $.identifier))),
+        optional($._expression),
+        ";"
+      ),
 
-    // Continue statement rule: e.g., continue;
-    continue_statement: ($) => seq("continue", ";"),
+    // Continue statement rule: e.g., continue; or continue 'label;
+    continue_statement: ($) =>
+      seq("continue", optional(field("label", seq("'", $.identifier))), ";"),
 
     // Range expression rule:
     // Half-open ranges: e.g., a..b, a.., ..b, ..

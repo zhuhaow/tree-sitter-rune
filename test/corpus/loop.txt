@@ -193,3 +193,30 @@ fn test() {
                 (break_statement
                   (static_string))))))))))
 
+==================
+Loop with labeled break
+==================
+
+fn test() {
+  'outer: loop {
+    loop {
+      break 'outer;
+    }
+  }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (loop_expression
+        label: (loop_label
+          name: (identifier))
+        body: (block
+          (loop_expression
+            body: (block
+              (break_statement
+                label: (identifier)))))))))
