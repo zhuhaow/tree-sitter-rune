@@ -593,10 +593,11 @@ module.exports = grammar({
         "}"
       ),
 
-    // Match arm rule: e.g., pattern => expression
+    // Match arm rule: e.g., pattern => expression or pattern if condition => expression
     match_arm: ($) =>
       seq(
         field("pattern", $.pattern),
+        optional(seq("if", field("guard", $._expression))), // Add support for guards
         "=>",
         field("value", choice($._expression, $.block))
       ),
@@ -684,7 +685,11 @@ module.exports = grammar({
             seq(
               "(",
               optional(
-                seq($.pattern, repeat(seq(",", $.pattern)), optional(","))
+                seq(
+                  field("pattern", $.pattern), 
+                  repeat(seq(",", field("pattern", $.pattern))), 
+                  optional(",")
+                )
               ),
               ")"
             ),

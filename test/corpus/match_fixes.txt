@@ -1,0 +1,281 @@
+===================
+Fixed match with enum pattern
+===================
+
+fn test_enum_pattern_fixed() {
+    match result {
+        Ok(value) => value,
+        Err(e) => panic(e)
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (path
+            (identifier)))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (call_expression
+            (path
+              (identifier))
+            (argument_list
+              (path
+                (identifier)))))))))
+
+===================
+Fixed match with block expression
+===================
+
+fn test_match_with_block_fixed() {
+    match result {
+        Ok(value) => {
+            let doubled = value * 2;
+            doubled
+        },
+        Err(e) => {
+            print(e);
+            -1
+        }
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (block
+            (let_statement
+              (identifier)
+              (binary_expression
+                (path
+                  (identifier))
+                (integer)))
+            (path
+              (identifier))))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (block
+            (expression_statement
+              (call_expression
+                (path
+                  (identifier))
+                (argument_list
+                  (path
+                    (identifier)))))
+            (unary_expression
+              (integer))))))))
+
+===================
+Match with guard expression
+===================
+
+fn test_match_with_guard() {
+    match value {
+        n if n > 0 => "positive",
+        n if n < 0 => "negative",
+        _ => "zero"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (identifier_pattern
+              (identifier)))
+          (binary_expression
+            (path
+              (identifier))
+            (integer))
+          (static_string))
+        (match_arm
+          (pattern
+            (identifier_pattern
+              (identifier)))
+          (binary_expression
+            (path
+              (identifier))
+            (integer))
+          (static_string))
+        (match_arm
+          (pattern
+            (wildcard_pattern))
+          (static_string))))))
+
+===================
+Complex nested enum pattern
+===================
+
+fn test_complex_nested_enum() {
+    match result {
+        Ok(Some(value)) => value,
+        Ok(None) => 0,
+        Err(e) => panic(e)
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (enum_variant_pattern
+                  (path
+                    (identifier))
+                  (pattern
+                    (identifier_pattern
+                      (identifier)))))))
+          (path
+            (identifier)))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (integer))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (call_expression
+            (path
+              (identifier))
+            (argument_list
+              (path
+                (identifier)))))))))
+
+===================
+Match with multiple patterns for same arm
+===================
+
+fn test_multiple_patterns_same_arm() {
+    match code {
+        200 | 201 | 204 => "success",
+        400 | 401 | 403 | 404 => "client error",
+        500 | 501 | 503 => "server error",
+        _ => "unknown"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (or_pattern
+              (literal_pattern
+                (integer))
+              (pattern
+                (or_pattern
+                  (literal_pattern
+                    (integer))
+                  (literal_pattern
+                    (integer))))))
+          (static_string))
+        (match_arm
+          (pattern
+            (or_pattern
+              (literal_pattern
+                (integer))
+              (pattern
+                (or_pattern
+                  (literal_pattern
+                    (integer))
+                  (pattern
+                    (or_pattern
+                      (literal_pattern
+                        (integer))
+                      (literal_pattern
+                        (integer))))))))
+          (static_string))
+        (match_arm
+          (pattern
+            (or_pattern
+              (literal_pattern
+                (integer))
+              (pattern
+                (or_pattern
+                  (literal_pattern
+                    (integer))
+                  (literal_pattern
+                    (integer))))))
+          (static_string))
+        (match_arm
+          (pattern
+            (wildcard_pattern))
+          (static_string))))))

@@ -1,0 +1,506 @@
+===================
+Match with nested patterns
+===================
+
+fn test_nested_patterns() {
+    match complex {
+        Point { x: 0, y: 0 } => "origin",
+        Point { x, y: 0 } => "x-axis",
+        Point { x: 0, y } => "y-axis",
+        Point { x, y } => "point"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (struct_pattern
+              (path
+                (identifier))
+              (struct_pattern_field
+                (identifier)
+                (pattern
+                  (literal_pattern
+                    (integer))))
+              (struct_pattern_field
+                (identifier)
+                (pattern
+                  (literal_pattern
+                    (integer))))))
+          (static_string))
+        (match_arm
+          (pattern
+            (struct_pattern
+              (path
+                (identifier))
+              (struct_pattern_shorthand
+                (identifier))
+              (struct_pattern_field
+                (identifier)
+                (pattern
+                  (literal_pattern
+                    (integer))))))
+          (static_string))
+        (match_arm
+          (pattern
+            (struct_pattern
+              (path
+                (identifier))
+              (struct_pattern_field
+                (identifier)
+                (pattern
+                  (literal_pattern
+                    (integer))))
+              (struct_pattern_shorthand
+                (identifier))))
+          (static_string))
+        (match_arm
+          (pattern
+            (struct_pattern
+              (path
+                (identifier))
+              (struct_pattern_shorthand
+                (identifier))
+              (struct_pattern_shorthand
+                (identifier))))
+          (static_string))))))
+
+===================
+Match with multiple enum variants
+===================
+
+fn test_multiple_enum_variants() {
+    match option {
+        Some(1) => "one",
+        Some(2) => "two",
+        Some(x) => format!("some other: {}", x),
+        None => "none"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (literal_pattern
+                  (integer)))))
+          (static_string))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (literal_pattern
+                  (integer)))))
+          (static_string))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (macro_invocation
+            (path
+              (identifier))
+            (argument_list
+              (static_string)
+              (path
+                (identifier)))))
+        (match_arm
+          (pattern
+            (identifier_pattern
+              (identifier)))
+          (static_string))))))
+
+===================
+Match with complex enum variants
+===================
+
+fn test_complex_enum_variants() {
+    match result {
+        Ok(Person { name, age: 18 }) => format!("{} is 18", name),
+        Ok(Person { name, age }) => format!("{} is {}", name, age),
+        Err(e) => format!("Error: {}", e)
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (struct_pattern
+                  (path
+                    (identifier))
+                  (struct_pattern_shorthand
+                    (identifier))
+                  (struct_pattern_field
+                    (identifier)
+                    (pattern
+                      (literal_pattern
+                        (integer))))))))
+          (macro_invocation
+            (path
+              (identifier))
+            (argument_list
+              (static_string)
+              (path
+                (identifier)))))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (struct_pattern
+                  (path
+                    (identifier))
+                  (struct_pattern_shorthand
+                    (identifier))
+                  (struct_pattern_shorthand
+                    (identifier))))))
+          (macro_invocation
+            (path
+              (identifier))
+            (argument_list
+              (static_string)
+              (path
+                (identifier))
+              (path
+                (identifier)))))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (macro_invocation
+            (path
+              (identifier))
+            (argument_list
+              (static_string)
+              (path
+                (identifier)))))))))
+
+===================
+Match with tuple struct pattern
+===================
+
+fn test_tuple_struct() {
+    match point {
+        Point(0, 0) => "origin",
+        Point(x, 0) => "x-axis",
+        Point(0, y) => "y-axis",
+        Point(x, y) => "point"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (literal_pattern
+                  (integer)))
+              (pattern
+                (literal_pattern
+                  (integer)))))
+          (static_string))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))
+              (pattern
+                (literal_pattern
+                  (integer)))))
+          (static_string))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (literal_pattern
+                  (integer)))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (static_string))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (static_string))))))
+
+===================
+Match with complex OR patterns
+===================
+
+fn test_complex_or_patterns() {
+    match value {
+        0 | 1 | 2 => "small",
+        3..=9 => "medium",
+        _ => "large"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (or_pattern
+              (literal_pattern
+                (integer))
+              (pattern
+                (or_pattern
+                  (literal_pattern
+                    (integer))
+                  (literal_pattern
+                    (integer))))))
+          (static_string))
+        (match_arm
+          (pattern
+            (range_pattern
+              (integer)
+              (integer)))
+          (static_string))
+        (match_arm
+          (pattern
+            (wildcard_pattern))
+          (static_string))))))
+
+===================
+Match with guards
+===================
+
+fn test_match_guards() {
+    match num {
+        x if x < 0 => "negative",
+        x if x > 0 => "positive",
+        _ => "zero"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (identifier_pattern
+              (identifier)))
+          (binary_expression
+            (path
+              (identifier))
+            (integer))
+          (static_string))
+        (match_arm
+          (pattern
+            (identifier_pattern
+              (identifier)))
+          (binary_expression
+            (path
+              (identifier))
+            (integer))
+          (static_string))
+        (match_arm
+          (pattern
+            (wildcard_pattern))
+          (static_string))))))
+
+===================
+Match with path enum variants
+===================
+
+fn test_match_path_enum() {
+    match result {
+        std::result::Ok(value) => value,
+        std::result::Err(error) => panic(error)
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier)
+                (identifier)
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (path
+            (identifier)))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier)
+                (identifier)
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (call_expression
+            (path
+              (identifier))
+            (argument_list
+              (path
+                (identifier)))))))))
+
+===================
+Match with nested tuple and struct patterns
+===================
+
+fn test_nested_patterns() {
+    match complex {
+        ((0, 0), Point { x: 0, y: 0 }) => "origin",
+        ((x, y), Point { x: px, y: py }) => "point"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (tuple_pattern
+              (pattern
+                (tuple_pattern
+                  (pattern
+                    (literal_pattern
+                      (integer)))
+                  (pattern
+                    (literal_pattern
+                      (integer)))))
+              (pattern
+                (struct_pattern
+                  (path
+                    (identifier))
+                  (struct_pattern_field
+                    (identifier)
+                    (pattern
+                      (literal_pattern
+                        (integer))))
+                  (struct_pattern_field
+                    (identifier)
+                    (pattern
+                      (literal_pattern
+                        (integer))))))))
+          (static_string))
+        (match_arm
+          (pattern
+            (tuple_pattern
+              (pattern
+                (tuple_pattern
+                  (pattern
+                    (identifier_pattern
+                      (identifier)))
+                  (pattern
+                    (identifier_pattern
+                      (identifier)))))
+              (pattern
+                (struct_pattern
+                  (path
+                    (identifier))
+                  (struct_pattern_field
+                    (identifier)
+                    (pattern
+                      (identifier_pattern
+                        (identifier))))
+                  (struct_pattern_field
+                    (identifier)
+                    (pattern
+                      (identifier_pattern
+                        (identifier))))))))
+          (static_string))))))
