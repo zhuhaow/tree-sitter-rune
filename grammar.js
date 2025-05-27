@@ -612,7 +612,8 @@ module.exports = grammar({
         $.struct_pattern,
         $.enum_variant_pattern,
         $.range_pattern,
-        $.or_pattern
+        $.or_pattern,
+        $.object_pattern
       ),
 
     // Literal pattern: numbers, strings, booleans
@@ -757,5 +758,44 @@ module.exports = grammar({
           )
         )
       ),
+
+    // Object pattern: e.g., #{ "make": year, "model": "Ford", .. }
+    object_pattern: ($) =>
+      seq(
+        "#",
+        "{",
+        optional(
+          seq(
+            choice(
+              $.object_pattern_field,
+              $.object_pattern_shorthand,
+              $.rest_pattern
+            ),
+            repeat(
+              seq(
+                ",",
+                choice(
+                  $.object_pattern_field,
+                  $.object_pattern_shorthand,
+                  $.rest_pattern
+                )
+              )
+            ),
+            optional(",") // Optional trailing comma
+          )
+        ),
+        "}"
+      ),
+
+    // Object pattern field: e.g., "make": year, or "model": "Ford"
+    object_pattern_field: ($) =>
+      seq(
+        field("key", choice($.static_string, $.identifier)),
+        ":",
+        field("pattern", $.pattern)
+      ),
+
+    // Object pattern shorthand: e.g., verbose (equivalent to verbose: verbose)
+    object_pattern_shorthand: ($) => field("name", $.identifier),
   },
 });

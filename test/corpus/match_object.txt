@@ -1,0 +1,248 @@
+===================
+Basic object pattern match
+===================
+
+fn describe_car(car) {
+    match car {
+        #{ "make": year, .. } if year < 1950 => "What, where did you get that?",
+        #{ "model": "Ford", "make": year, .. } if year >= 2000 => "Pretty fast!",
+        _ => "Can't tell 😞",
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)))
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (object_pattern
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (identifier_pattern
+                    (identifier))))
+              (rest_pattern)))
+          (binary_expression
+            (path
+              (identifier))
+            (integer))
+          (static_string))
+        (match_arm
+          (pattern
+            (object_pattern
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (literal_pattern
+                    (static_string))))
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (identifier_pattern
+                    (identifier))))
+              (rest_pattern)))
+          (binary_expression
+            (path
+              (identifier))
+            (integer))
+          (static_string))
+        (match_arm
+          (pattern
+            (wildcard_pattern))
+          (static_string))))))
+
+===================
+Complex object pattern match
+===================
+
+fn process_data(data) {
+    match data {
+        #{ "user": #{ "name": name, "age": age }, "status": "active" } => {
+            format!("Active user: {} ({})", name, age)
+        },
+        #{ "user": #{ "name": name, .. }, "status": "inactive" } => {
+            format!("Inactive user: {}", name)
+        },
+        #{ "error": message } => {
+            format!("Error: {}", message)
+        },
+        _ => "Invalid data format"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)))
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (object_pattern
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (object_pattern
+                    (object_pattern_field
+                      (static_string)
+                      (pattern
+                        (identifier_pattern
+                          (identifier))))
+                    (object_pattern_field
+                      (static_string)
+                      (pattern
+                        (identifier_pattern
+                          (identifier)))))))
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (literal_pattern
+                    (static_string))))))
+          (block
+            (macro_invocation
+              (path
+                (identifier))
+              (argument_list
+                (static_string)
+                (path
+                  (identifier))
+                (path
+                  (identifier))))))
+        (match_arm
+          (pattern
+            (object_pattern
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (object_pattern
+                    (object_pattern_field
+                      (static_string)
+                      (pattern
+                        (identifier_pattern
+                          (identifier))))
+                    (rest_pattern))))
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (literal_pattern
+                    (static_string))))))
+          (block
+            (macro_invocation
+              (path
+                (identifier))
+              (argument_list
+                (static_string)
+                (path
+                  (identifier))))))
+        (match_arm
+          (pattern
+            (object_pattern
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (identifier_pattern
+                    (identifier))))))
+          (block
+            (macro_invocation
+              (path
+                (identifier))
+              (argument_list
+                (static_string)
+                (path
+                  (identifier))))))
+        (match_arm
+          (pattern
+            (wildcard_pattern))
+          (static_string))))))
+
+===================
+Object pattern with mixed field types
+===================
+
+fn process_config(config) {
+    match config {
+        #{ "debug": true, "port": port, verbose } => {
+            format!("Debug mode on port {} with verbose={}", port, verbose)
+        },
+        #{ "debug": false, port, .. } => {
+            format!("Production mode on port {}", port)
+        },
+        _ => "Invalid config"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)))
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (object_pattern
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (literal_pattern
+                    (boolean))))
+              (object_pattern_field
+                (static_string)
+                (pattern
+                  (identifier_pattern
+                    (identifier))))
+              (object_pattern_shorthand
+                (identifier))))
+        (block
+          (macro_invocation
+            (path
+              (identifier))
+            (argument_list
+              (static_string)
+              (path
+                (identifier))
+              (path
+                (identifier))))))
+      (match_arm
+        (pattern
+          (object_pattern
+            (object_pattern_field
+              (static_string)
+              (pattern
+                (literal_pattern
+                  (boolean))))
+            (object_pattern_shorthand
+              (identifier))
+            (rest_pattern)))
+        (block
+          (macro_invocation
+            (path
+              (identifier))
+            (argument_list
+              (static_string)
+              (path
+                (identifier))))))
+      (match_arm
+        (pattern
+          (wildcard_pattern))
+        (static_string))))))
