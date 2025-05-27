@@ -1,0 +1,268 @@
+===================
+Basic match expression
+===================
+
+fn test_match() {
+    match x {
+        1 => "one"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (literal_pattern
+              (integer)))
+          (static_string))))))
+
+===================
+Multiple match arms
+===================
+
+fn test_multiple_arms() {
+    match x {
+        1 => "one",
+        2 => "two",
+        _ => "other"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (literal_pattern
+              (integer)))
+          (static_string))
+        (match_arm
+          (pattern
+            (literal_pattern
+              (integer)))
+          (static_string))
+        (match_arm
+          (pattern
+            (wildcard_pattern))
+          (static_string))))))
+
+===================
+Match with enum pattern
+===================
+
+fn test_enum_pattern() {
+    match result {
+        Ok(value) => value
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (path
+            (identifier)))))))
+
+===================
+Match with tuple pattern
+===================
+
+fn test_tuple_pattern() {
+    match point {
+        (0, 0) => "origin"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (tuple_pattern
+              (pattern
+                (literal_pattern
+                  (integer)))
+              (pattern
+                (literal_pattern
+                  (integer)))))
+          (static_string))))))
+
+===================
+Match with struct pattern
+===================
+
+fn test_struct_pattern() {
+    match person {
+        Person { name: "John", .. } => "Hello John"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (struct_pattern
+              (path
+                (identifier))
+              (struct_pattern_field
+                (identifier)
+                (pattern
+                  (literal_pattern
+                    (static_string))))
+              (rest_pattern)))
+          (static_string))))))
+
+===================
+Match with or pattern
+===================
+
+fn test_or_pattern() {
+    match n {
+        1 | 2 => "small"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (or_pattern
+              (literal_pattern
+                (integer))
+              (literal_pattern
+                (integer))))
+          (static_string))))))
+
+===================
+Match with range pattern
+===================
+
+fn test_range_pattern() {
+    match ch {
+        'a'..='z' => "lowercase",
+        'A'..='Z' => "uppercase",
+        '0'..='9' => "digit"
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (range_pattern
+              (char)
+              (char)))
+          (static_string))
+        (match_arm
+          (pattern
+            (range_pattern
+              (char)
+              (char)))
+          (static_string))
+        (match_arm
+          (pattern
+            (range_pattern
+              (char)
+              (char)))
+          (static_string))))))
+
+===================
+Match with block expression
+===================
+
+fn test_match_with_block() {
+    match result {
+        Ok(value) => {
+            let doubled = value * 2;
+            doubled
+        }
+    }
+}
+
+---
+
+(source_file
+  (fn_declaration
+    (identifier)
+    (parameter_list)
+    (block
+      (match_expression
+        (path
+          (identifier))
+        (match_arm
+          (pattern
+            (enum_variant_pattern
+              (path
+                (identifier))
+              (pattern
+                (identifier_pattern
+                  (identifier)))))
+          (block
+            (let_statement
+              (identifier)
+              (binary_expression
+                (path
+                  (identifier))
+                (integer)))
+            (path
+              (identifier))))))))

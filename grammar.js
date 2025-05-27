@@ -38,7 +38,11 @@ module.exports = grammar({
     ["template_chars", "template_interpolation"], // Template literals
   ],
 
-  conflicts: ($) => [[$._expression, $._statement]],
+  conflicts: ($) => [
+    [$._expression, $._statement],
+    [$.path, $.identifier_pattern],
+    [$.struct_pattern, $.enum_variant_pattern]
+  ],
 
   supertypes: ($) => [$._expression, $._statement],
 
@@ -173,7 +177,8 @@ module.exports = grammar({
         $.loop_expression,
         $.while_expression,
         $.for_expression,
-        $.range_expression
+        $.range_expression,
+        $.match_expression
       ),
 
     use_declaration: ($) => seq("use", $.path, ";"),
@@ -569,6 +574,175 @@ module.exports = grammar({
             "..=",
             field("end", $._expression)
           )
+        )
+      ),
+
+    // Match expression rule: e.g., match value { 1 => "one", 2 => "two", _ => "other" }
+    match_expression: ($) =>
+      seq(
+        "match",
+        field("value", $._expression),
+        "{",
+        optional(
+          seq(
+            $.match_arm,
+            repeat(seq(",", $.match_arm)),
+            optional(",") // Optional trailing comma
+          )
+        ),
+        "}"
+      ),
+
+    // Match arm rule: e.g., pattern => expression
+    match_arm: ($) =>
+      seq(
+        field("pattern", $.pattern),
+        "=>",
+        field("value", choice($._expression, $.block))
+      ),
+
+    // Pattern rule for match expressions
+    pattern: ($) =>
+      choice(
+        $.literal_pattern,
+        $.identifier_pattern,
+        $.wildcard_pattern,
+        $.tuple_pattern,
+        $.struct_pattern,
+        $.enum_variant_pattern,
+        $.range_pattern,
+        $.or_pattern
+      ),
+
+    // Literal pattern: numbers, strings, booleans
+    literal_pattern: ($) => choice($.integer, $.float, $.static_string, $.boolean, $.char),
+
+    // Identifier pattern (variable binding): e.g., x
+    identifier_pattern: ($) => $.identifier,
+
+    // Wildcard pattern: _
+    wildcard_pattern: ($) => "_",
+
+    // Tuple pattern: e.g., (x, y, _)
+    tuple_pattern: ($) =>
+      seq(
+        "(",
+        choice(
+          $._empty_tuple_marker,
+          seq($.pattern, ","),
+          seq(
+            $.pattern,
+            repeat1(seq(",", $.pattern)),
+            optional(",")
+          )
+        ),
+        ")"
+      ),
+
+    // Struct pattern: e.g., Point { x, y: 0, .. }
+    struct_pattern: ($) =>
+      seq(
+        field("name", $.path),
+        "{",
+        optional(
+          seq(
+            choice(
+              $.struct_pattern_field,
+              $.struct_pattern_shorthand,
+              $.rest_pattern
+            ),
+            repeat(
+              seq(
+                ",",
+                choice(
+                  $.struct_pattern_field,
+                  $.struct_pattern_shorthand,
+                  $.rest_pattern
+                )
+              )
+            ),
+            optional(",")
+          )
+        ),
+        "}"
+      ),
+
+    // Struct pattern field: e.g., x: 42
+    struct_pattern_field: ($) =>
+      seq(
+        field("name", $.identifier),
+        ":",
+        field("pattern", $.pattern)
+      ),
+
+    // Struct pattern shorthand: e.g., x (equivalent to x: x)
+    struct_pattern_shorthand: ($) => field("name", $.identifier),
+
+    // Rest pattern: .. (matches remaining fields)
+    rest_pattern: ($) => "..",
+
+    // Enum variant pattern: e.g., Option::Some(x) or Color::Red
+    enum_variant_pattern: ($) =>
+      seq(
+        field("path", $.path),
+        optional(
+          choice(
+            // Tuple variant: e.g., Some(x)
+            seq(
+              "(",
+              optional(
+                seq(
+                  $.pattern,
+                  repeat(seq(",", $.pattern)),
+                  optional(",")
+                )
+              ),
+              ")"
+            ),
+            // Struct variant: e.g., Person { name, age }
+            seq(
+              "{",
+              optional(
+                seq(
+                  choice(
+                    $.struct_pattern_field,
+                    $.struct_pattern_shorthand,
+                    $.rest_pattern
+                  ),
+                  repeat(
+                    seq(
+                      ",",
+                      choice(
+                        $.struct_pattern_field,
+                        $.struct_pattern_shorthand,
+                        $.rest_pattern
+                      )
+                    )
+                  ),
+                  optional(",")
+                )
+              ),
+              "}"
+            )
+          )
+        )
+      ),
+
+    // Range pattern: e.g., 1..=5 or 'a'..='z'
+    range_pattern: ($) =>
+      seq(
+        field("start", choice($.integer, $.float, $.char)),
+        choice("..", "..="),
+        field("end", choice($.integer, $.float, $.char))
+      ),
+
+    // Or pattern: e.g., 1 | 2 | 3
+    or_pattern: ($) =>
+      prec.left(1, 
+        seq(
+          field("left", choice($.literal_pattern, $.identifier_pattern, $.wildcard_pattern, $.tuple_pattern)),
+          "|",
+          field("right", choice($.pattern, $.literal_pattern, $.identifier_pattern, $.wildcard_pattern, $.tuple_pattern))
         )
       ),
   },
