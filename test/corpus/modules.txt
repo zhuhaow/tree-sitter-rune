@@ -1,0 +1,187 @@
+==================
+Inline modules
+==================
+
+mod foo {
+    pub fn number() {
+        1
+    }
+}
+
+mod bar {
+    pub fn number() {
+        2
+    }
+}
+
+---
+
+(source_file
+  (module_declaration
+    (identifier)
+    (fn_declaration
+      (visibility_modifier)
+      (identifier)
+      (parameter_list)
+      (block
+        (integer))))
+  (module_declaration
+    (identifier)
+    (fn_declaration
+      (visibility_modifier)
+      (identifier)
+      (parameter_list)
+      (block
+        (integer)))))
+
+==================
+External modules
+==================
+
+mod foo;
+mod bar;
+
+---
+
+(source_file
+  (module_declaration
+    (identifier))
+  (module_declaration
+    (identifier)))
+
+==================
+Public modules
+==================
+
+pub mod foo {
+    fn internal() {
+        1
+    }
+
+    pub fn external() {
+        2
+    }
+}
+
+---
+
+(source_file
+  (module_declaration
+    (visibility_modifier)
+    (identifier)
+    (fn_declaration
+      (identifier)
+      (parameter_list)
+      (block
+        (integer)))
+    (fn_declaration
+      (visibility_modifier)
+      (identifier)
+      (parameter_list)
+      (block
+        (integer)))))
+
+==================
+Path keywords
+==================
+
+mod test {
+    pub fn number() {
+        crate::other::value + self::value + super::value
+    }
+}
+
+---
+
+(source_file
+  (module_declaration
+    (identifier)
+    (fn_declaration
+      (visibility_modifier)
+      (identifier)
+      (parameter_list)
+      (block
+        (binary_expression
+          (binary_expression
+            (path
+              (path_keyword)
+              (identifier)
+              (identifier))
+            (path
+              (path_keyword)
+              (identifier)))
+          (path
+            (path_keyword)
+            (identifier)))))))
+
+==================
+Visibility modifiers
+==================
+
+pub struct Point {
+    x,
+    y
+}
+
+pub(crate) fn internal_api() {
+    // Implementation
+}
+
+pub(self) fn module_only() {
+    // Implementation
+}
+
+pub(super) fn parent_only() {
+    // Implementation
+}
+
+---
+
+(source_file
+  (struct_declaration
+    (visibility_modifier)
+    (identifier)
+    (struct_field
+      (identifier))
+    (struct_field
+      (identifier)))
+  (fn_declaration
+    (visibility_modifier)
+    (identifier)
+    (parameter_list)
+    (block
+      (comment)))
+  (fn_declaration
+    (visibility_modifier)
+    (identifier)
+    (parameter_list)
+    (block
+      (comment)))
+  (fn_declaration
+    (visibility_modifier)
+    (identifier)
+    (parameter_list)
+    (block
+      (comment))))
+
+==================
+Public use declarations
+==================
+
+pub use std::collections::HashMap;
+use self::internal::helpers;
+
+---
+
+(source_file
+  (use_declaration
+    (visibility_modifier)
+    (path
+      (identifier)
+      (identifier)
+      (identifier)))
+  (use_declaration
+    (path
+      (path_keyword)
+      (identifier)
+      (identifier))))

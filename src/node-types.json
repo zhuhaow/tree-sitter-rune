@@ -473,6 +473,10 @@
         {
           "type": "enum_variant",
           "named": true
+        },
+        {
+          "type": "visibility_modifier",
+          "named": true
         }
       ]
     }
@@ -555,6 +559,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -650,6 +664,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -785,6 +809,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1035,6 +1069,66 @@
     }
   },
   {
+    "type": "module_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "_statement",
+            "named": true
+          },
+          {
+            "type": "enum_declaration",
+            "named": true
+          },
+          {
+            "type": "fn_declaration",
+            "named": true
+          },
+          {
+            "type": "impl_declaration",
+            "named": true
+          },
+          {
+            "type": "module_declaration",
+            "named": true
+          },
+          {
+            "type": "struct_declaration",
+            "named": true
+          },
+          {
+            "type": "use_declaration",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "object_entry",
     "named": true,
     "fields": {},
@@ -1244,9 +1338,18 @@
         {
           "type": "identifier",
           "named": true
+        },
+        {
+          "type": "path_keyword",
+          "named": true
         }
       ]
     }
+  },
+  {
+    "type": "path_keyword",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "pattern",
@@ -1409,6 +1512,10 @@
           "named": true
         },
         {
+          "type": "module_declaration",
+          "named": true
+        },
+        {
           "type": "struct_declaration",
           "named": true
         },
@@ -1433,7 +1540,7 @@
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "struct_field",
             "named": true
           }
         ]
@@ -1448,6 +1555,42 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "struct_field",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1627,11 +1770,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "visibility_modifier",
           "named": true
         }
       ]
@@ -1651,6 +1798,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "visibility_modifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "while_expression",
@@ -1902,6 +2054,10 @@
     "named": false
   },
   {
+    "type": "crate",
+    "named": false
+  },
+  {
     "type": "else",
     "named": false
   },
@@ -1958,11 +2114,27 @@
     "named": false
   },
   {
+    "type": "mod",
+    "named": false
+  },
+  {
+    "type": "pub",
+    "named": false
+  },
+  {
     "type": "return",
     "named": false
   },
   {
+    "type": "self",
+    "named": false
+  },
+  {
     "type": "struct",
+    "named": false
+  },
+  {
+    "type": "super",
     "named": false
   },
   {

@@ -1,0 +1,52 @@
+==================
+Struct with visibility modifiers
+==================
+
+struct Point {
+    pub x,
+    y,
+    pub(crate) z,
+}
+
+---
+
+(source_file
+  (struct_declaration
+    (identifier)
+    (struct_field
+      (visibility_modifier)
+      (identifier))
+    (struct_field
+      (identifier))
+    (struct_field
+      (visibility_modifier)
+      (identifier))))
+
+==================
+Public enum with visibility modifiers
+==================
+
+pub enum Direction {
+    North,
+    pub South,
+    pub(self) East,
+    pub(super) West,
+}
+
+---
+
+(source_file
+  (enum_declaration
+    (visibility_modifier)
+    (identifier)
+    (enum_variant
+      (identifier))
+    (enum_variant
+      (visibility_modifier)
+      (identifier))
+    (enum_variant
+      (visibility_modifier)
+      (identifier))
+    (enum_variant
+      (visibility_modifier)
+      (identifier))))

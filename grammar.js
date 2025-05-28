@@ -58,15 +58,17 @@ module.exports = grammar({
     _declaration: ($) =>
       choice(
         $.use_declaration,
+        $.module_declaration,
         $.struct_declaration,
         $.enum_declaration,
         $.fn_declaration,
         $.impl_declaration
       ),
 
-    // Function declaration rule: e.g., fn add(a, b) { a + b }
+    // Function declaration rule: e.g., fn add(a, b) { a + b } or pub fn add(a, b) { a + b }
     fn_declaration: ($) =>
       seq(
+        optional($.visibility_modifier),
         optional("async"),
         "fn",
         field("name", $.identifier),
@@ -74,9 +76,10 @@ module.exports = grammar({
         field("body", $.block)
       ),
 
-    // Implementation block rule: e.g., impl Foo { fn new() { Foo } }
+    // Implementation block rule: e.g., impl Foo { fn new() { Foo } } or pub impl Foo { fn new() { Foo } }
     impl_declaration: ($) =>
       seq(
+        optional($.visibility_modifier),
         "impl",
         field("name", $.path),
         field("body", seq("{", repeat($.fn_declaration), "}"))
@@ -182,10 +185,47 @@ module.exports = grammar({
         $.match_expression
       ),
 
-    use_declaration: ($) => seq("use", $.path, ";"),
+    use_declaration: ($) =>
+      seq(optional($.visibility_modifier), "use", $.path, ";"),
+
+    // Module declaration rule: e.g., mod foo { ... } or mod foo;
+    module_declaration: ($) =>
+      seq(
+        optional($.visibility_modifier),
+        "mod",
+        field("name", $.identifier),
+        choice(
+          seq(
+            "{",
+            field("body", repeat(choice($._declaration, $._statement))),
+            "}"
+          ),
+          ";" // External module
+        )
+      ),
+
+    // Visibility modifier for items: pub, pub(crate), pub(super), pub(self)
+    visibility_modifier: ($) =>
+      choice(
+        "pub",
+        seq("pub", "(", "crate", ")"),
+        seq("pub", "(", "super", ")"),
+        seq("pub", "(", "self", ")")
+        // Not supported yet: seq("pub", "(", "in", $.path, ")")
+      ),
 
     path: ($) =>
-      choice($.identifier, seq($.identifier, repeat1(seq("::", $.identifier)))),
+      choice(
+        $.identifier,
+        $.path_keyword,
+        seq(
+          choice($.identifier, $.path_keyword),
+          repeat1(seq("::", $.identifier))
+        )
+      ),
+
+    // Path keywords: crate, self, super for path disambiguation
+    path_keyword: ($) => choice("crate", "self", "super"),
 
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
     await_keyword: ($) => "await",
@@ -278,13 +318,14 @@ module.exports = grammar({
     // Struct declaration rule: e.g., struct User { username, active, }
     struct_declaration: ($) =>
       seq(
+        optional($.visibility_modifier),
         "struct",
         field("name", $.identifier),
         "{",
         optional(
           seq(
-            field("field", $.identifier),
-            repeat(seq(",", field("field", $.identifier))),
+            field("field", $.struct_field),
+            repeat(seq(",", field("field", $.struct_field))),
             optional(",") // Optional trailing comma for fields
           )
         ),
@@ -294,6 +335,7 @@ module.exports = grammar({
     // Enum declaration rule: e.g., enum Color { Red, Green, Blue }
     enum_declaration: ($) =>
       seq(
+        optional($.visibility_modifier),
         "enum",
         field("name", $.identifier),
         "{",
@@ -336,6 +378,7 @@ module.exports = grammar({
 
     enum_variant: ($) =>
       seq(
+        optional($.visibility_modifier),
         field("name", $.identifier),
         optional(
           choice(
@@ -798,5 +841,9 @@ module.exports = grammar({
 
     // Object pattern shorthand: e.g., verbose (equivalent to verbose: verbose)
     object_pattern_shorthand: ($) => field("name", $.identifier),
+
+    // Struct field with optional visibility modifier
+    struct_field: ($) =>
+      seq(optional($.visibility_modifier), field("name", $.identifier)),
   },
 });

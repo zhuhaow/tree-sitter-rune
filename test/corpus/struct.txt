@@ -23,7 +23,8 @@ struct User {
 (source_file
   (struct_declaration
     name: (identifier)
-    field: (identifier)))
+    field: (struct_field
+      name: (identifier))))
 
 ===
 Struct Declaration with multiple fields
@@ -40,9 +41,12 @@ struct Point {
 (source_file
   (struct_declaration
     name: (identifier)
-    field: (identifier)
-    field: (identifier)
-    field: (identifier)))
+    field: (struct_field
+      name: (identifier))
+    field: (struct_field
+      name: (identifier))
+    field: (struct_field
+      name: (identifier))))
 
 ===
 Struct Declaration with multiple fields and trailing comma
@@ -59,6 +63,9 @@ struct Color {
 (source_file
   (struct_declaration
     name: (identifier)
-    field: (identifier)
-    field: (identifier)
-    field: (identifier)))
+    field: (struct_field
+      name: (identifier))
+    field: (struct_field
+      name: (identifier))
+    field: (struct_field
+      name: (identifier))))
