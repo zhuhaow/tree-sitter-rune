@@ -46,4 +46,3 @@ Object Literal with Trailing Comma
       (object_entry
         (static_string)
         (integer)))))
-
