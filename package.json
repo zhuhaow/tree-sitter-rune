@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-rune",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Rune grammar for tree-sitter",
   "repository": "https://github.com/zhuhaow/tree-sitter-rune",
   "license": "MIT",

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-rune
-        VERSION "0.1.0"
+        VERSION "0.0.1"
         DESCRIPTION "Rune grammar for tree-sitter"
         HOMEPAGE_URL "https://github.com/zhuhaow/tree-sitter-rune"
         LANGUAGES C)

@@ -4,7 +4,7 @@ endif
 
 LANGUAGE_NAME := tree-sitter-rune
 HOMEPAGE_URL := https://github.com/zhuhaow/tree-sitter-rune
-VERSION := 0.1.0
+VERSION := 0.0.1
 
 # repository
 SRC_DIR := src
