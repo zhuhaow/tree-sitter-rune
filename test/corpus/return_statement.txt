@@ -2,94 +2,70 @@
 Simple Return Statement
 ===
 
-fn test() {
-  return 42;
-}
+return 42;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (return_statement
-        (integer)))))
+  (return_statement
+    (integer)))
 
 ===
 Empty Return Statement
 ===
 
-fn test() {
-  return;
-}
+return;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (return_statement))))
+  (return_statement))
 
 ===
 Return with Expression
 ===
 
-fn calculate() {
-  return a + b * c;
-}
+return a + b * c;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (return_statement
-        (binary_expression
-          left: (path
-            (identifier))
-          right: (binary_expression
-            left: (path
-              (identifier))
-            right: (path
-              (identifier))))))))
+  (return_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier))))))
 
 ===
 Complex Return Statement
 ===
 
-fn complex_calculation() {
-  return (a + b) * (c - d) || e && f;
-}
+return (a + b) * (c - d) || e && f;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (return_statement
-        (binary_expression
-          left: (binary_expression
-            left: (parenthesized_expression
-              (binary_expression
-                left: (path
-                  (identifier))
-                right: (path
-                  (identifier))))
-            right: (parenthesized_expression
-              (binary_expression
-                left: (path
-                  (identifier))
-                right: (path
-                  (identifier)))))
-          right: (binary_expression
+  (return_statement
+    (binary_expression
+      left: (binary_expression
+        left: (parenthesized_expression
+          (binary_expression
             left: (path
               (identifier))
             right: (path
-              (identifier))))))))
+              (identifier))))
+        right: (parenthesized_expression
+          (binary_expression
+            left: (path
+              (identifier))
+            right: (path
+              (identifier)))))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier))))))

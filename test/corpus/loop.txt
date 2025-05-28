@@ -2,221 +2,179 @@
 Loop expression
 ==================
 
-fn test() {
-  loop {
-    if x > 10 {
-      break x;
-    }
+loop {
+  if x > 10 {
+    break x;
   }
 }
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
+  (loop_expression
     body: (block
-      (loop_expression
-        body: (block
-          (if_expression
-            condition: (binary_expression
-              left: (path
-                (identifier))
-              right: (integer))
-            consequence: (block
-              (break_statement
-                (path
-                  (identifier))))))))))
+      (if_expression
+        condition: (binary_expression
+          left: (path
+            (identifier))
+          right: (integer))
+        consequence: (block
+          (break_statement
+            (path
+              (identifier))))))))
 
 ==================
 While expression
 ==================
 
-fn test() {
-  while x < 10 {
-    if x == 5 {
-      break;
-    }
-    x += 1;
+while x < 10 {
+  if x == 5 {
+    break;
   }
+  x += 1;
 }
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
+  (while_expression
+    condition: (binary_expression
+      left: (path
+        (identifier))
+      right: (integer))
     body: (block
-      (while_expression
+      (if_expression
         condition: (binary_expression
           left: (path
             (identifier))
           right: (integer))
-        body: (block
-          (if_expression
-            condition: (binary_expression
-              left: (path
-                (identifier))
-              right: (integer))
-            consequence: (block
-              (break_statement)))
-          (compound_assignment_statement
-            left: (path
-              (identifier))
-            right: (integer)))))))
+        consequence: (block
+          (break_statement)))
+      (compound_assignment_statement
+        left: (path
+          (identifier))
+        right: (integer)))))
 
 ==================
 For expression
 ==================
 
-fn test() {
-  for item in collection {
-    total += item;
-    if total > 100 {
-      break total;
-    }
+for item in collection {
+  total += item;
+  if total > 100 {
+    break total;
   }
 }
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
+  (for_expression
+    pattern: (identifier)
+    iterator: (path
+      (identifier))
     body: (block
-      (for_expression
-        pattern: (identifier)
-        iterator: (path
+      (compound_assignment_statement
+        left: (path
           (identifier))
-        body: (block
-          (compound_assignment_statement
-            left: (path
-              (identifier))
-            right: (path
-              (identifier)))
-          (if_expression
-            condition: (binary_expression
-              left: (path
-                (identifier))
-              right: (integer))
-            consequence: (block
-              (break_statement
-                (path
-                  (identifier))))))))))
+        right: (path
+          (identifier)))
+      (if_expression
+        condition: (binary_expression
+          left: (path
+            (identifier))
+          right: (integer))
+        consequence: (block
+          (break_statement
+            (path
+              (identifier))))))))
 
 ==================
 Break statement
 ==================
 
-fn test() {
-  loop {
-    break;
-  }
+loop {
+  break;
 }
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
+  (loop_expression
     body: (block
-      (loop_expression
-        body: (block
-          (break_statement))))))
+      (break_statement))))
 
 ==================
 Continue statement
 ==================
 
-fn test() {
-  while true {
-    if x < 5 {
-      continue;
-    }
-    x += 1;
+while true {
+  if x < 5 {
+    continue;
   }
+  x += 1;
 }
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
+  (while_expression
+    condition: (boolean)
     body: (block
-      (while_expression
-        condition: (boolean)
-        body: (block
-          (if_expression
-            condition: (binary_expression
-              left: (path
-                (identifier))
-              right: (integer))
-            consequence: (block
-              (continue_statement)))
-          (compound_assignment_statement
-            left: (path
-              (identifier))
-            right: (integer)))))))
+      (if_expression
+        condition: (binary_expression
+          left: (path
+            (identifier))
+          right: (integer))
+        consequence: (block
+          (continue_statement)))
+      (compound_assignment_statement
+        left: (path
+          (identifier))
+        right: (integer)))))
 
 ==================
 Break with value
 ==================
 
-fn test() {
-  let result = loop {
-    if condition {
-      break "success";
-    }
-  };
-}
+let result = loop {
+  if condition {
+    break "success";
+  }
+};
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (let_statement
-        name: (identifier)
-        value: (loop_expression
-          body: (block
-            (if_expression
-              condition: (path
-                (identifier))
-              consequence: (block
-                (break_statement
-                  (static_string))))))))))
+    value: (loop_expression
+      body: (block
+        (if_expression
+          condition: (path
+            (identifier))
+          consequence: (block
+            (break_statement
+              (static_string))))))))
 
 ==================
 Loop with labeled break
 ==================
 
-fn test() {
-  'outer: loop {
-    loop {
-      break 'outer;
-    }
+'outer: loop {
+  loop {
+    break 'outer;
   }
 }
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
+  (loop_expression
+    label: (loop_label
+      name: (identifier))
     body: (block
       (loop_expression
-        label: (loop_label
-          name: (identifier))
         body: (block
-          (loop_expression
-            body: (block
-              (break_statement
-                label: (identifier)))))))))
+          (break_statement
+            label: (identifier)))))))

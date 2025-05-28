@@ -134,34 +134,24 @@ enum Action {
 Option Enum (Special Case - Some)
 ===
 
-fn test() {
-  Some
-}
+Some;
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (path
-        (identifier)))))
+  (expression_statement
+    (path
+      (identifier))))
 
 ===
 Option Enum (Special Case - None)
 ===
 
-fn test() {
-  None
-}
+  None;
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (path
-        (identifier)))))
+  (expression_statement
+    (path
+      (identifier))))

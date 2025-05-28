@@ -2,23 +2,18 @@
 Match with nested patterns
 ===================
 
-fn test_nested_patterns() {
-    match complex {
-        Point { x: 0, y: 0 } => "origin",
-        Point { x, y: 0 } => "x-axis",
-        Point { x: 0, y } => "y-axis",
-        Point { x, y } => "point"
-    }
-}
+match complex {
+    Point { x: 0, y: 0 } => "origin",
+    Point { x, y: 0 } => "x-axis",
+    Point { x: 0, y } => "y-axis",
+    Point { x, y } => "point"
+};
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (match_expression
+  (expression_statement
+    (match_expression
         (path
           (identifier))
         (match_arm
@@ -72,29 +67,24 @@ fn test_nested_patterns() {
                 (identifier))
               (struct_pattern_shorthand
                 (identifier))))
-          (static_string))))))
+          (static_string)))))
 
 ===================
 Match with multiple enum variants
 ===================
 
-fn test_multiple_enum_variants() {
-    match option {
-        Some(1) => "one",
-        Some(2) => "two",
-        Some(x) => format!("some other: {}", x),
-        None => "none"
-    }
-}
+match option {
+    Some(1) => "one",
+    Some(2) => "two",
+    Some(x) => format!("some other: {}", x),
+    None => "none"
+};
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (match_expression
+  (expression_statement
+    (match_expression
         (path
           (identifier))
         (match_arm
@@ -134,28 +124,23 @@ fn test_multiple_enum_variants() {
           (pattern
             (identifier_pattern
               (identifier)))
-          (static_string))))))
+          (static_string)))))
 
 ===================
 Match with complex enum variants
 ===================
 
-fn test_complex_enum_variants() {
-    match result {
-        Ok(Person { name, age: 18 }) => format!("{} is 18", name),
-        Ok(Person { name, age }) => format!("{} is {}", name, age),
-        Err(e) => format!("Error: {}", e)
-    }
-}
+match result {
+    Ok(Person { name, age: 18 }) => format!("{} is 18", name),
+    Ok(Person { name, age }) => format!("{} is {}", name, age),
+    Err(e) => format!("Error: {}", e)
+};
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (match_expression
+  (expression_statement
+    (match_expression
         (path
           (identifier))
         (match_arm
@@ -217,29 +202,24 @@ fn test_complex_enum_variants() {
             (argument_list
               (static_string)
               (path
-                (identifier)))))))))
+                (identifier))))))))
 
 ===================
 Match with tuple struct pattern
 ===================
 
-fn test_tuple_struct() {
-    match point {
-        Point(0, 0) => "origin",
-        Point(x, 0) => "x-axis",
-        Point(0, y) => "y-axis",
-        Point(x, y) => "point"
-    }
-}
+match point {
+    Point(0, 0) => "origin",
+    Point(x, 0) => "x-axis",
+    Point(0, y) => "y-axis",
+    Point(x, y) => "point"
+};
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (match_expression
+  (expression_statement
+    (match_expression
         (path
           (identifier))
         (match_arm
@@ -289,28 +269,23 @@ fn test_tuple_struct() {
               (pattern
                 (identifier_pattern
                   (identifier)))))
-          (static_string))))))
+          (static_string)))))
 
 ===================
 Match with complex OR patterns
 ===================
 
-fn test_complex_or_patterns() {
-    match value {
-        0 | 1 | 2 => "small",
-        3..=9 => "medium",
-        _ => "large"
-    }
-}
+match value {
+    0 | 1 | 2 => "small",
+    3..=9 => "medium",
+    _ => "large"
+};
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (match_expression
+  (expression_statement
+    (match_expression
         (path
           (identifier))
         (match_arm
@@ -334,28 +309,23 @@ fn test_complex_or_patterns() {
         (match_arm
           (pattern
             (wildcard_pattern))
-          (static_string))))))
+          (static_string)))))
 
 ===================
 Match with guards
 ===================
 
-fn test_match_guards() {
-    match num {
-        x if x < 0 => "negative",
-        x if x > 0 => "positive",
-        _ => "zero"
-    }
-}
+match num {
+    x if x < 0 => "negative",
+    x if x > 0 => "positive",
+    _ => "zero"
+};
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (match_expression
+  (expression_statement
+    (match_expression
         (path
           (identifier))
         (match_arm
@@ -379,27 +349,22 @@ fn test_match_guards() {
         (match_arm
           (pattern
             (wildcard_pattern))
-          (static_string))))))
+          (static_string)))))
 
 ===================
 Match with path enum variants
 ===================
 
-fn test_match_path_enum() {
-    match result {
-        std::result::Ok(value) => value,
-        std::result::Err(error) => panic(error)
-    }
-}
+match result {
+    std::result::Ok(value) => value,
+    std::result::Err(error) => panic(error)
+};
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (match_expression
+  (expression_statement
+    (match_expression
         (path
           (identifier))
         (match_arm
@@ -429,27 +394,22 @@ fn test_match_path_enum() {
               (identifier))
             (argument_list
               (path
-                (identifier)))))))))
+                (identifier))))))))
 
 ===================
 Match with nested tuple and struct patterns
 ===================
 
-fn test_nested_patterns() {
-    match complex {
-        ((0, 0), Point { x: 0, y: 0 }) => "origin",
-        ((x, y), Point { x: px, y: py }) => "point"
-    }
-}
+match complex {
+    ((0, 0), Point { x: 0, y: 0 }) => "origin",
+    ((x, y), Point { x: px, y: py }) => "point"
+};
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (match_expression
+  (expression_statement
+    (match_expression
         (path
           (identifier))
         (match_arm
@@ -503,4 +463,4 @@ fn test_nested_patterns() {
                     (pattern
                       (identifier_pattern
                         (identifier))))))))
-          (static_string))))))
+          (static_string)))))

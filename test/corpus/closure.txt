@@ -2,127 +2,103 @@
 Simple Closure
 ===
 
-fn test() {
   |a, b| a + b;
-}
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (closure_expression
-          parameters: (closure_parameter_list
-            (parameter
-                name: (identifier))
-            (parameter
-                name: (identifier)))
-          body: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier))))))))
+  (expression_statement
+    (closure_expression
+      parameters: (closure_parameter_list
+        (parameter
+          name: (identifier))
+        (parameter
+          name: (identifier)))
+      body: (binary_expression
+        left: (path (identifier))
+        right: (path (identifier))))))
 
 ===
 Closure as Function Argument
 ===
 
-fn test() {
   calculate(|a, b| a * b);
-}
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (call_expression
-          function: (path (identifier))
-          arguments: (argument_list
-            (closure_expression
-              parameters: (closure_parameter_list
-                (parameter
-                    name: (identifier))
-                (parameter
-                    name: (identifier)))
-              body: (binary_expression
-                left: (path (identifier))
-                right: (path (identifier))))))))))
+  (expression_statement
+    (call_expression
+      function: (path (identifier))
+      arguments: (argument_list
+        (closure_expression
+          parameters: (closure_parameter_list
+            (parameter
+              name: (identifier))
+            (parameter
+              name: (identifier)))
+          body: (binary_expression
+            left: (path (identifier))
+            right: (path (identifier))))))))
 
 ===
 Closure with Capturing Variables
 ===
 
-fn test() {
   let n = 10;
   work(|a, b| n + a + b);
-}
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (let_statement
-        name: (identifier)
-        value: (integer))
-      (expression_statement
-        (call_expression
-          function: (path (identifier))
-          arguments: (argument_list
-            (closure_expression
-              parameters: (closure_parameter_list
-                (parameter
-                    name: (identifier))
-                (parameter
-                    name: (identifier)))
-              body: (binary_expression
-                left: (binary_expression
-                  left: (path (identifier))
-                  right: (path (identifier)))
-                right: (path (identifier))))))))))
+    value: (integer))
+  (expression_statement
+    (call_expression
+      function: (path (identifier))
+      arguments: (argument_list
+        (closure_expression
+          parameters: (closure_parameter_list
+            (parameter
+              name: (identifier))
+            (parameter
+              name: (identifier)))
+          body: (binary_expression
+            left: (binary_expression
+              left: (path (identifier))
+              right: (path (identifier)))
+            right: (path (identifier))))))))
 ===
 Async Closure with Block Body
 ===
 
-fn test() {
   let handler = async || {
     Ok(http::get(url).await?.status())
   };
-}
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (let_statement
-        name: (identifier)
-        value: (closure_expression
-          parameters: (closure_parameter_list)
-          body: (block
+    value: (closure_expression
+      parameters: (closure_parameter_list)
+      body: (block
+        (call_expression
+          function: (path (identifier))
+          arguments: (argument_list
             (call_expression
-              function: (path (identifier))
-              arguments: (argument_list
-                (call_expression
-                    function: (member_expression
-                    object: (try_expression
-                        expression: (member_expression
-                        object: (call_expression
-                            function: (path
-                            (identifier)
-                            (identifier))
-                            arguments: (argument_list
-                            (path
-                                (identifier))))
-                        property: (await_keyword)))
-                    property: (identifier))
-                    arguments: (argument_list))))))))))
+              function: (member_expression
+                object: (try_expression
+                  expression: (member_expression
+                    object: (call_expression
+                      function: (path
+                        (identifier)
+                        (identifier))
+                      arguments: (argument_list
+                        (path
+                          (identifier))))
+                    property: (await_keyword)))
+                property: (identifier))
+              arguments: (argument_list))))))))

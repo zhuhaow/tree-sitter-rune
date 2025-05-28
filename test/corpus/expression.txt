@@ -2,357 +2,299 @@
 Binary Arithmetic Operations
 ===
 
-fn test() {
-  2 + 2;
-  3 - 1;
-  4 * 5;
-  8 / 2;
-  10 % 3;
-}
+2 + 2;
+3 - 1;
+4 * 5;
+8 / 2;
+10 % 3;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer))))))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer))))
 
 ===
 Binary Comparison Operations
 ===
 
-fn test() {
-  a == b;
-  x != y;
-  1 < 2;
-  3 > 2;
-  4 <= 5;
-  5 >= 5;
-}
+a == b;
+x != y;
+1 < 2;
+3 > 2;
+4 <= 5;
+5 >= 5;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (binary_expression
-          left: (path
-            (identifier))
-          right: (path
-            (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (path
-            (identifier))
-          right: (path
-            (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer))))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer))))
 
 ===
 Binary Logical Operations
 ===
 
-fn test() {
-  true && false;
-  true || false;
-}
+true && false;
+true || false;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (binary_expression
-          left: (boolean)
-          right: (boolean)))
-      (expression_statement
-        (binary_expression
-          left: (boolean)
-          right: (boolean))))))
+  (expression_statement
+    (binary_expression
+      left: (boolean)
+      right: (boolean)))
+  (expression_statement
+    (binary_expression
+      left: (boolean)
+      right: (boolean))))
 
 ===
 Binary Bitwise Operations
 ===
 
-fn test() {
-  1 & 2;
-  1 | 2;
-  1 ^ 2;
-  1 << 2;
-  4 >> 1;
-}
+1 & 2;
+1 | 2;
+1 ^ 2;
+1 << 2;
+4 >> 1;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer)))
-      (expression_statement
-        (binary_expression
-          left: (integer)
-          right: (integer))))))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (integer)
+      right: (integer))))
 
 ===
 Unary Operations
 ===
 
-fn test() {
-  !true;
-  -42;
-}
+!true;
+-42;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (unary_expression
-          argument: (boolean)))
-      (expression_statement
-        (unary_expression
-          argument: (integer))))))
+  (expression_statement
+    (unary_expression
+      argument: (boolean)))
+  (expression_statement
+    (unary_expression
+      argument: (integer))))
 
 ===
 Parenthesized Expressions
 ===
 
-fn test() {
-  (1 + 2) * 3;
-  (a || b) && c;
-}
+(1 + 2) * 3;
+(a || b) && c;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
+  (expression_statement
+    (binary_expression
+      left: (parenthesized_expression
         (binary_expression
-          left: (parenthesized_expression
-            (binary_expression
-              left: (integer)
-              right: (integer)))
+          left: (integer)
           right: (integer)))
-      (expression_statement
+      right: (integer)))
+  (expression_statement
+    (binary_expression
+      left: (parenthesized_expression
         (binary_expression
-          left: (parenthesized_expression
-            (binary_expression
-              left: (path
-                (identifier))
-              right: (path
-                (identifier))))
+          left: (path
+            (identifier))
           right: (path
-            (identifier)))))))
+            (identifier))))
+      right: (path
+        (identifier)))))
 
 ===
 Call Expression
 ===
 
-fn test() {
-  add(1, 2);
-  greet("Hello");
-  calculate(a, b, c);
-}
+
+add(1, 2);
+greet("Hello");
+calculate(a, b, c);
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (call_expression
-          function: (path
-            (identifier))
-          arguments: (argument_list
-            (integer)
-            (integer))))
-      (expression_statement
-        (call_expression
-          function: (path
-            (identifier))
-          arguments: (argument_list
-            (static_string))))
-      (expression_statement
-        (call_expression
-          function: (path
-            (identifier))
-          arguments: (argument_list
-            (path
-              (identifier))
-            (path
-              (identifier))
-            (path
-              (identifier))))))))
+  (expression_statement
+    (call_expression
+      function: (path
+        (identifier))
+      arguments: (argument_list
+        (integer)
+        (integer))))
+  (expression_statement
+    (call_expression
+      function: (path
+        (identifier))
+      arguments: (argument_list
+        (static_string))))
+  (expression_statement
+    (call_expression
+      function: (path
+        (identifier))
+      arguments: (argument_list
+        (path
+          (identifier))
+        (path
+          (identifier))
+        (path
+          (identifier))))))
 
 ===
 Member Expression
 ===
 
-fn test() {
-  person.name;
-  object.method();
-  result.await;
-}
+person.name;
+object.method();
+result.await;
+
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (member_expression
-          object: (path
-            (identifier))
-          property: (identifier)))
-      (expression_statement
-        (call_expression
-          function: (member_expression
-            object: (path
-              (identifier))
-            property: (identifier))
-          arguments: (argument_list)))
-      (expression_statement
-        (member_expression
-          object: (path
-            (identifier))
-          property: (await_keyword))))))
+  (expression_statement
+    (member_expression
+      object: (path
+        (identifier))
+      property: (identifier)))
+  (expression_statement
+    (call_expression
+      function: (member_expression
+        object: (path
+          (identifier))
+        property: (identifier))
+      arguments: (argument_list)))
+  (expression_statement
+    (member_expression
+      object: (path
+        (identifier))
+      property: (await_keyword))))
 
 ===
 Index Expression
 ===
 
-fn test() {
-  array[0];
-  matrix[i][j];
-  collection["key"];
-}
+array[0];
+matrix[i][j];
+collection["key"];
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (index_expression
-          object: (path
-            (identifier))
-          index: (integer)))
-      (expression_statement
-        (index_expression
-          object: (index_expression
-            object: (path
-              (identifier))
-            index: (path
-              (identifier)))
-          index: (path
-            (identifier))))
-      (expression_statement
-        (index_expression
-          object: (path
-            (identifier))
-          index: (static_string))))))
+  (expression_statement
+    (index_expression
+      object: (path
+        (identifier))
+      index: (integer)))
+  (expression_statement
+    (index_expression
+      object: (index_expression
+        object: (path
+          (identifier))
+        index: (path
+          (identifier)))
+      index: (path
+        (identifier))))
+  (expression_statement
+    (index_expression
+      object: (path
+        (identifier))
+      index: (static_string))))
 
 ===
 Macro Invocation
 ===
 
-fn test() {
-  println!("Hello, World!");
-  format!("{}, {}", a, b);
-}
+println!("Hello, World!");
+format!("{}, {}", a, b);
+
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (macro_invocation
-          macro: (path
-            (identifier))
-          arguments: (argument_list
-            (static_string))))
-      (expression_statement
-        (macro_invocation
-          macro: (path
-            (identifier))
-          arguments: (argument_list
-            (static_string)
-            (path
-              (identifier))
-            (path
-              (identifier)))))
-    )))
+  (expression_statement
+    (macro_invocation
+      macro: (path
+        (identifier))
+      arguments: (argument_list
+        (static_string))))
+  (expression_statement
+    (macro_invocation
+      macro: (path
+        (identifier))
+      arguments: (argument_list
+        (static_string)
+        (path
+          (identifier))
+        (path
+          (identifier))))))

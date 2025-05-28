@@ -2,117 +2,105 @@
 Basic compound assignments
 ==================
 
-fn main() {
-    let x = 10;
-    x += 5;
-    x -= 2;
-    x *= 3;
-    x /= 2;
-    x %= 7;
-    x |= 1;
-    x &= 3;
-    x ^= 2;
-    x <<= 1;
-    x >>= 2;
-}
+let x = 10;
+x += 5;
+x -= 2;
+x *= 3;
+x /= 2;
+x %= 7;
+x |= 1;
+x &= 3;
+x ^= 2;
+x <<= 1;
+x >>= 2;
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     (identifier)
-    (parameter_list)
-    (block
-      (let_statement
-        (identifier)
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (path
-          (identifier))
-        (integer)))))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (path
+      (identifier))
+    (integer)))
 
 ==================
 Compound assignments with complex targets
 ==================
 
-fn update_data() {
-    data.count += 1;
-    values[0] *= 2;
-    obj.items[index] += amount;
-    my::module::counter -= 5;
-}
+data.count += 1;
+values[0] *= 2;
+obj.items[index] += amount;
+my::module::counter -= 5;
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (compound_assignment_statement
-        (member_expression
-          (path
-            (identifier))
-          (identifier))
-        (integer))
-      (compound_assignment_statement
-        (index_expression
-          (path
-            (identifier))
-          (integer))
-        (integer))
-      (compound_assignment_statement
-        (index_expression
-          (member_expression
-            (path
-              (identifier))
-            (identifier))
-          (path
-            (identifier)))
+  (compound_assignment_statement
+    (member_expression
+      (path
+        (identifier))
+      (identifier))
+    (integer))
+  (compound_assignment_statement
+    (index_expression
+      (path
+        (identifier))
+      (integer))
+    (integer))
+  (compound_assignment_statement
+    (index_expression
+      (member_expression
         (path
-          (identifier)))
-      (compound_assignment_statement
-        (path
-          (identifier)
-          (identifier)
           (identifier))
-        (integer)))))
+        (identifier))
+      (path
+        (identifier)))
+    (path
+      (identifier)))
+  (compound_assignment_statement
+    (path
+      (identifier)
+      (identifier)
+      (identifier))
+    (integer)))
 
 ==================
 Compound assignments with complex expressions

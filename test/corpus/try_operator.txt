@@ -2,61 +2,49 @@
 Basic try operator usage
 ==================
 
-fn parse_number() {
-    let num = parse_int(input)?;
-    return num * 2;
-}
+let num = parse_int(input)?;
+return num * 2;
 
-fn complex_try() {
-    let val = foo()?.bar()?;
-    process(get_value()?)?;
-}
+let val = foo()?.bar()?;
+process(get_value()?)?;
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     (identifier)
-    (parameter_list)
-    (block
-      (let_statement
-        (identifier)
-        (try_expression
-          (call_expression
-            (path
-              (identifier))
-            (argument_list
-              (path
-                (identifier))))))
-      (return_statement
-        (binary_expression
+    (try_expression
+      (call_expression
+        (path
+          (identifier))
+        (argument_list
           (path
-            (identifier))
-          (integer)))))
-  (fn_declaration
+            (identifier))))))
+  (return_statement
+    (binary_expression
+      (path
+        (identifier))
+      (integer)))
+  (let_statement
     (identifier)
-    (parameter_list)
-    (block
-      (let_statement
-        (identifier)
-        (try_expression
-          (call_expression
-            (member_expression
-                (try_expression
-                    (call_expression
-                        (path
-                        (identifier))
-                        (argument_list)))
-                    (identifier))
-            (argument_list))))
-      (expression_statement
-        (try_expression
-          (call_expression
-            (path
-              (identifier))
-            (argument_list
-              (try_expression
-                (call_expression
-                  (path
-                    (identifier))
-                  (argument_list))))))))))
+    (try_expression
+      (call_expression
+        (member_expression
+          (try_expression
+            (call_expression
+              (path
+                (identifier))
+              (argument_list)))
+          (identifier))
+        (argument_list))))
+  (expression_statement
+    (try_expression
+      (call_expression
+        (path
+          (identifier))
+        (argument_list
+          (try_expression
+            (call_expression
+              (path
+                (identifier))
+              (argument_list))))))))

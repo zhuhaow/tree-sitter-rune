@@ -1,111 +1,71 @@
 ===
 unit type
 ===
-fn test() {
-  ()
-}
+();
 ---
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (unit))))
+  (expression_statement
+    (unit)))
 
 ===
 boolean true
 ===
-fn test() {
-  true
-}
+true;
 ---
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (boolean))))
+  (expression_statement
+    (boolean)))
 
 ===
 boolean false
 ===
-fn test() {
-  false
-}
+false;
 ---
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (boolean))))
+  (expression_statement
+    (boolean)))
 
 ===
 byte literal
 ===
-fn test() {
-  b'\xff'
-}
+b'\xff';
 ---
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (byte))))
+  (expression_statement
+    (byte)))
 
 ===
 char literal
 ===
-fn test() {
-  'a'
-}
+'a';
 ---
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (char))))
+  (expression_statement
+    (char)))
 
 ===
 integer literal
 ===
-fn test() {
-  42
-}
+42;
 ---
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (integer))))
+  (expression_statement
+    (integer)))
 
 ===
 float literal
 ===
-fn test() {
-  3.1418
-}
+3.1418;
 ---
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (float))))
+  (expression_statement
+    (float)))
 
 ===
 static string
 ===
-fn test() {
-  "Hello World"
-}
+"Hello World";
 ---
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (static_string))))
+  (expression_statement
+    (static_string)))

@@ -154,6 +154,10 @@
         "named": true
       },
       {
+        "type": "match_expression",
+        "named": true
+      },
+      {
         "type": "return_statement",
         "named": true
       },

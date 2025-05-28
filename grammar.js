@@ -111,7 +111,8 @@ module.exports = grammar({
         $.if_expression,
         $.loop_expression,
         $.while_expression,
-        $.for_expression
+        $.for_expression,
+        $.match_expression
       ),
 
     expression_statement: ($) => seq($._expression, ";"),

@@ -2,140 +2,122 @@
 For loop with range expressions
 ==================
 
-fn for_loop() {
-    let n = 0;
+let n = 0;
 
-    for i in 0..10 {
-        n += i;
-    }
-
-    assert_eq!(n, 45);
+for i in 0..10 {
+    n += i;
 }
+
+assert_eq!(n, 45);
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     name: (identifier)
-    parameters: (parameter_list)
+    value: (integer))
+  (for_expression
+    pattern: (identifier)
+    iterator: (range_expression
+      start: (integer)
+      end: (integer))
     body: (block
-      (let_statement
-        name: (identifier)
-        value: (integer))
-      (for_expression
-        pattern: (identifier)
-        iterator: (range_expression
-          start: (integer)
-          end: (integer))
-        body: (block
-          (compound_assignment_statement
-            left: (path
-              (identifier))
-            right: (path
-              (identifier)))))
-      (expression_statement
-        (macro_invocation
-          macro: (path
-            (identifier))
-          arguments: (argument_list
-            (path
-              (identifier))
-            (integer)))))))
+      (compound_assignment_statement
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))))
+  (expression_statement
+    (macro_invocation
+      macro: (path
+        (identifier))
+      arguments: (argument_list
+        (path
+          (identifier))
+        (integer)))))
 
 ==================
 For loop with inclusive range
 ==================
 
-fn inclusive_for_loop() {
-    let sum = 0;
+let sum = 0;
 
-    for i in 1..=5 {
-        sum += i;
-    }
-
-    assert_eq!(sum, 15);
+for i in 1..=5 {
+    sum += i;
 }
+
+assert_eq!(sum, 15);
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     name: (identifier)
-    parameters: (parameter_list)
+    value: (integer))
+  (for_expression
+    pattern: (identifier)
+    iterator: (range_expression
+      start: (integer)
+      end: (integer))
     body: (block
-      (let_statement
-        name: (identifier)
-        value: (integer))
-      (for_expression
-        pattern: (identifier)
-        iterator: (range_expression
-          start: (integer)
-          end: (integer))
-        body: (block
-          (compound_assignment_statement
-            left: (path
-              (identifier))
-            right: (path
-              (identifier)))))
-      (expression_statement
-        (macro_invocation
-          macro: (path
-            (identifier))
-          arguments: (argument_list
-            (path
-              (identifier))
-            (integer)))))))
+      (compound_assignment_statement
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))))
+  (expression_statement
+    (macro_invocation
+      macro: (path
+        (identifier))
+      arguments: (argument_list
+        (path
+          (identifier))
+        (integer)))))
 
 ==================
 For loop with variable range
 ==================
 
-fn variable_for_loop() {
-    let start = 3;
-    let end = 7;
-    let result = 0;
+let start = 3;
+let end = 7;
+let result = 0;
 
-    for i in start..end {
-        result += i;
-    }
-
-    assert_eq!(result, 18);
+for i in start..end {
+    result += i;
 }
+
+assert_eq!(result, 18);
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     name: (identifier)
-    parameters: (parameter_list)
+    value: (integer))
+  (let_statement
+    name: (identifier)
+    value: (integer))
+  (let_statement
+    name: (identifier)
+    value: (integer))
+  (for_expression
+    pattern: (identifier)
+    iterator: (range_expression
+      start: (path
+        (identifier))
+      end: (path
+        (identifier)))
     body: (block
-      (let_statement
-        name: (identifier)
-        value: (integer))
-      (let_statement
-        name: (identifier)
-        value: (integer))
-      (let_statement
-        name: (identifier)
-        value: (integer))
-      (for_expression
-        pattern: (identifier)
-        iterator: (range_expression
-          start: (path
-            (identifier))
-          end: (path
-            (identifier)))
-        body: (block
-          (compound_assignment_statement
-            left: (path
-              (identifier))
-            right: (path
-              (identifier)))))
-      (expression_statement
-        (macro_invocation
-          macro: (path
-            (identifier))
-          arguments: (argument_list
-            (path
-              (identifier))
-            (integer)))))))
+      (compound_assignment_statement
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))))
+  (expression_statement
+    (macro_invocation
+      macro: (path
+        (identifier))
+      arguments: (argument_list
+        (path
+          (identifier))
+        (integer)))))

@@ -2,43 +2,31 @@
 Simple Template Literals
 ==================
 
-fn main() {
-  let greeting = `Hello, World!`;
-  return greeting;
-}
+let greeting = `Hello, World!`;
+return greeting;
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
       (let_statement
         (identifier)
         (template_literal
           (template_chars)))
       (return_statement
         (path
-          (identifier))))))
+          (identifier))))
 
 ==================
 Template Literals with Interpolation
 ==================
 
-fn main() {
-  let name = "Rune";
-  let greeting = `Hello, ${name}!`;
-  return greeting;
-}
+let name = "Rune";
+let greeting = `Hello, ${name}!`;
+return greeting;
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
       (let_statement
         (identifier)
         (static_string))
@@ -52,26 +40,20 @@ fn main() {
           (template_chars)))
       (return_statement
         (path
-          (identifier))))))
+          (identifier))))
 
 ==================
 Template Literals with Complex Expressions
 ==================
 
-fn main() {
-  let a = 5;
-  let b = 10;
-  let result = `Sum: ${a + b}, Product: ${a * b}`;
-  return result;
-}
+let a = 5;
+let b = 10;
+let result = `Sum: ${a + b}, Product: ${a * b}`;
+return result;
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
       (let_statement
         (identifier)
         (integer))
@@ -97,25 +79,19 @@ fn main() {
                 (identifier))))))
       (return_statement
         (path
-          (identifier))))))
+          (identifier))))
 
 ==================
 Template Literals with Macro Invocation
 ==================
 
-fn main() {
-  let vec = [1, 2, 3];
-  dbg!(`${vec}`);
-  return vec;
-}
+let vec = [1, 2, 3];
+dbg!(`${vec}`);
+return vec;
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
       (let_statement
         (identifier)
         (vector
@@ -133,4 +109,4 @@ fn main() {
                   (identifier)))))))
       (return_statement
         (path
-          (identifier))))))
+          (identifier))))

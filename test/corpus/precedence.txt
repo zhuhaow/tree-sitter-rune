@@ -2,363 +2,417 @@
 Operator precedence
 ===
 
-fn test_basic_precedence() {
-  a + b * c;
-  a * b + c;
-  a || b && c;
-  a | b ^ c & d;
-  a == b < c;
-  a << b + c;
-  x.y[i].z();
-  !-x;
-}
+a + b * c;
+a * b + c;
+a || b && c;
+a | b ^ c & d;
+a == b < c;
+a << b + c;
+x.y[i].z();
+!-x;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (binary_expression
-          left: (path (identifier))
-          right: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))))
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (path (identifier))
-          right: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))))
-      (expression_statement
-        (binary_expression
-          left: (path (identifier))
-          right: (binary_expression
-            left: (path (identifier))
-            right: (binary_expression
-              left: (path (identifier))
-              right: (path (identifier))))))
-      (expression_statement
-        (binary_expression
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (binary_expression
           left: (path
-                (identifier))
-              right: (binary_expression
-                left: (path
-                  (identifier))
-                right: (path
-                  (identifier)))))
-      (expression_statement
-        (binary_expression
-          left: (path (identifier))
-          right: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))))
-      (expression_statement
-        (call_expression
-          function: (member_expression
-            object: (index_expression
-              object: (member_expression
-                object: (path (identifier))
-                property: (identifier))
-              index: (path (identifier)))
+            (identifier))
+          right: (path
+            (identifier))))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))))
+  (expression_statement
+    (call_expression
+      function: (member_expression
+        object: (index_expression
+          object: (member_expression
+            object: (path
+              (identifier))
             property: (identifier))
-          arguments: (argument_list)))
-      (expression_statement
-        (unary_expression
-          argument: (unary_expression
-            argument: (path (identifier))))))))
+          index: (path
+            (identifier)))
+        property: (identifier))
+      arguments: (argument_list)))
+  (expression_statement
+    (unary_expression
+      argument: (unary_expression
+        argument: (path
+          (identifier))))))
 
 ===
 Nested expressions with parentheses
 ===
 
-fn test_parentheses() {
-  (a + b) * c;
-  a * (b + c);
-  (a || b) && c;
-  a || (b && c);
-}
+(a + b) * c;
+a * (b + c);
+(a || b) && c;
+a || (b && c);
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
+  (expression_statement
+    (binary_expression
+      left: (parenthesized_expression
         (binary_expression
-          left: (parenthesized_expression
-            (binary_expression
-              left: (path (identifier))
-              right: (path (identifier))))
-          right: (path (identifier))))
-      (expression_statement
+          left: (path
+            (identifier))
+          right: (path
+            (identifier))))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (parenthesized_expression
         (binary_expression
-          left: (path (identifier))
-          right: (parenthesized_expression
-            (binary_expression
-              left: (path (identifier))
-              right: (path (identifier))))))
-      (expression_statement
+          left: (path
+            (identifier))
+          right: (path
+            (identifier))))))
+  (expression_statement
+    (binary_expression
+      left: (parenthesized_expression
         (binary_expression
-          left: (parenthesized_expression
-            (binary_expression
-              left: (path (identifier))
-              right: (path (identifier))))
-          right: (path (identifier))))
-      (expression_statement
+          left: (path
+            (identifier))
+          right: (path
+            (identifier))))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (parenthesized_expression
         (binary_expression
-          left: (path (identifier))
-          right: (parenthesized_expression
-            (binary_expression
-              left: (path (identifier))
-              right: (path (identifier)))))))))
+          left: (path
+            (identifier))
+          right: (path
+            (identifier)))))))
 
 ===
 Complex expressions
 ===
 
-fn test_complex_expressions() {
-  a + b * c || d && e < f;
-  a.b.c[d + e * f]();
-  !(a == b) && c || d;
-  a << b + c * d;
-}
+a + b * c || d && e < f;
+a.b.c[d + e * f]();
+!(a == b) && c || d;
+a << b + c * d;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (binary_expression
-              left: (path (identifier))
-              right: (path (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (binary_expression
+          left: (path
+            (identifier))
+          right: (path
+            (identifier))))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (binary_expression
+          left: (path
+            (identifier))
+          right: (path
+            (identifier))))))
+  (expression_statement
+    (call_expression
+      function: (index_expression
+        object: (member_expression
+          object: (member_expression
+            object: (path
+              (identifier))
+            property: (identifier))
+          property: (identifier))
+        index: (binary_expression
+          left: (path
+            (identifier))
           right: (binary_expression
-            left: (path (identifier))
-            right: (binary_expression
-              left: (path (identifier))
-              right: (path (identifier))))))
-      (expression_statement
-        (call_expression
-          function: (index_expression
-            object: (member_expression
-              object: (member_expression
-                object: (path (identifier))
-                property: (identifier))
-              property: (identifier))
-            index: (binary_expression
-              left: (path (identifier))
-              right: (binary_expression
-                left: (path (identifier))
-                right: (path (identifier)))))
-          arguments: (argument_list)))
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (unary_expression
-              argument: (parenthesized_expression
-                (binary_expression
-                  left: (path (identifier))
-                  right: (path (identifier)))))
-            right: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (path (identifier))
-          right: (binary_expression
-            left: (path (identifier))
-            right: (binary_expression
-              left: (path (identifier))
-              right: (path (identifier)))))))))
+            left: (path
+              (identifier))
+            right: (path
+              (identifier)))))
+      arguments: (argument_list)))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (unary_expression
+          argument: (parenthesized_expression
+            (binary_expression
+              left: (path
+                (identifier))
+              right: (path
+                (identifier)))))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (path
+        (identifier))
+      right: (binary_expression
+        left: (path
+          (identifier))
+        right: (binary_expression
+          left: (path
+            (identifier))
+          right: (path
+            (identifier)))))))
 
 ===
 Unary operators precedence
 ===
 
-fn test_unary_operators() {
-  !a && b;
-  -a + b;
-  !a.b;
-  !(a || b);
-  -a * b;
-}
+!a && b;
+-a + b;
+!a.b;
+!(a || b);
+-a * b;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
+  (expression_statement
+    (binary_expression
+      left: (unary_expression
+        argument: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (unary_expression
+        argument: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (unary_expression
+      argument: (member_expression
+        object: (path
+          (identifier))
+        property: (identifier))))
+  (expression_statement
+    (unary_expression
+      argument: (parenthesized_expression
         (binary_expression
-          left: (unary_expression
-            argument: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (unary_expression
-            argument: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (unary_expression
-          argument: (member_expression
-            object: (path (identifier))
-            property: (identifier))))
-      (expression_statement
-        (unary_expression
-          argument: (parenthesized_expression
-            (binary_expression
-              left: (path (identifier))
-              right: (path (identifier))))))
-      (expression_statement
-        (binary_expression
-          left: (unary_expression
-            argument: (path (identifier)))
-          right: (path (identifier)))))))
+          left: (path
+            (identifier))
+          right: (path
+            (identifier))))))
+  (expression_statement
+    (binary_expression
+      left: (unary_expression
+        argument: (path
+          (identifier)))
+      right: (path
+        (identifier)))))
 
 ===
 Member, index, and call precedence
 ===
 
-fn test_member_index_call() {
-  a.b();
-  a[b]();
-  a.b[c];
-  a[b].c;
-  a.b.c();
-  a().b;
-  (a + b).c;
-}
+a.b();
+a[b]();
+a.b[c];
+a[b].c;
+a.b.c();
+a().b;
+(a + b).c;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (call_expression
-          function: (member_expression
-            object: (path (identifier))
-            property: (identifier))
-          arguments: (argument_list)))
-      (expression_statement
-        (call_expression
-          function: (index_expression
-            object: (path (identifier))
-            index: (path (identifier)))
-          arguments: (argument_list)))
-      (expression_statement
-        (index_expression
-          object: (member_expression
-            object: (path (identifier))
-            property: (identifier))
-          index: (path (identifier))))
-      (expression_statement
-        (member_expression
-          object: (index_expression
-            object: (path (identifier))
-            index: (path (identifier)))
-          property: (identifier)))
-      (expression_statement
-        (call_expression
-          function: (member_expression
-            object: (member_expression
-              object: (path (identifier))
-              property: (identifier))
-            property: (identifier))
-          arguments: (argument_list)))
-      (expression_statement
-        (member_expression
-          object: (call_expression
-            function: (path (identifier))
-            arguments: (argument_list))
-          property: (identifier)))
-      (expression_statement
-        (member_expression
-          object: (parenthesized_expression
-            (binary_expression
-              left: (path (identifier))
-              right: (path (identifier))))
-          property: (identifier))))))
+  (expression_statement
+    (call_expression
+      function: (member_expression
+        object: (path
+          (identifier))
+        property: (identifier))
+      arguments: (argument_list)))
+  (expression_statement
+    (call_expression
+      function: (index_expression
+        object: (path
+          (identifier))
+        index: (path
+          (identifier)))
+      arguments: (argument_list)))
+  (expression_statement
+    (index_expression
+      object: (member_expression
+        object: (path
+          (identifier))
+        property: (identifier))
+      index: (path
+        (identifier))))
+  (expression_statement
+    (member_expression
+      object: (index_expression
+        object: (path
+          (identifier))
+        index: (path
+          (identifier)))
+      property: (identifier)))
+  (expression_statement
+    (call_expression
+      function: (member_expression
+        object: (member_expression
+          object: (path
+            (identifier))
+          property: (identifier))
+        property: (identifier))
+      arguments: (argument_list)))
+  (expression_statement
+    (member_expression
+      object: (call_expression
+        function: (path
+          (identifier))
+        arguments: (argument_list))
+      property: (identifier)))
+  (expression_statement
+    (member_expression
+      object: (parenthesized_expression
+        (binary_expression
+          left: (path
+            (identifier))
+          right: (path
+            (identifier))))
+      property: (identifier))))
 
 ===
 Associativity
 ===
 
-fn test_associativity() {
-  a + b + c;
-  a * b * c;
-  a && b && c;
-  a || b || c;
-  a | b | c;
-  a ^ b ^ c;
-  a & b & c;
-}
+a + b + c;
+a * b * c;
+a && b && c;
+a || b || c;
+a | b | c;
+a ^ b ^ c;
+a & b & c;
 
 ---
 
 (source_file
-  (fn_declaration
-    name: (identifier)
-    parameters: (parameter_list)
-    body: (block
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))
-          right: (path (identifier))))
-      (expression_statement
-        (binary_expression
-          left: (binary_expression
-            left: (path (identifier))
-            right: (path (identifier)))
-          right: (path (identifier)))))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier))))
+  (expression_statement
+    (binary_expression
+      left: (binary_expression
+        left: (path
+          (identifier))
+        right: (path
+          (identifier)))
+      right: (path
+        (identifier)))))

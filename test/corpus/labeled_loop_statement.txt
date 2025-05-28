@@ -2,93 +2,87 @@
 For loop with labeled continue and break
 ==================
 
-fn labeled_continue() {
-    let sum = 0;
+let sum = 0;
 
-    'outer: for i in 0..10 {
-        for j in 0..5 {
-            if j == 2 {
-                continue 'outer;
-            }
-            sum += i + j;
+'outer: for i in 0..10 {
+    for j in 0..5 {
+        if j == 2 {
+            continue 'outer;
         }
+        sum += i + j;
     }
-
-    'counting: while sum < 100 {
-        if sum > 50 {
-            break 'counting;
-        }
-        sum += 1;
-    }
-
-    assert_eq!(sum, 51);
 }
+
+'counting: while sum < 100 {
+    if sum > 50 {
+        break 'counting;
+    }
+    sum += 1;
+    }
+
+assert_eq!(sum, 51);
 
 ---
 
 (source_file
-  (fn_declaration
+    (let_statement
     name: (identifier)
-    parameters: (parameter_list)
+    value: (integer))
+    (for_expression
+    label: (loop_label
+        name: (identifier))
+    pattern: (identifier)
+    iterator: (range_expression
+        start: (integer)
+        end: (integer))
     body: (block
-      (let_statement
-        name: (identifier)
-        value: (integer))
-      (for_expression
-        label: (loop_label
-          name: (identifier))
+        (for_expression
         pattern: (identifier)
         iterator: (range_expression
-          start: (integer)
-          end: (integer))
+            start: (integer)
+            end: (integer))
         body: (block
-          (for_expression
-            pattern: (identifier)
-            iterator: (range_expression
-              start: (integer)
-              end: (integer))
-            body: (block
-              (if_expression
-                condition: (binary_expression
-                  left: (path
-                    (identifier))
-                  right: (integer))
-                consequence: (block
-                  (continue_statement
-                    label: (identifier))))
-              (compound_assignment_statement
-                left: (path
-                  (identifier))
-                right: (binary_expression
-                  left: (path
-                    (identifier))
-                  right: (path
-                    (identifier))))))))
-      (while_expression
-        label: (loop_label
-          name: (identifier))
-        condition: (binary_expression
-          left: (path
-            (identifier))
-          right: (integer))
-        body: (block
-          (if_expression
+            (if_expression
             condition: (binary_expression
-              left: (path
+                left: (path
                 (identifier))
-              right: (integer))
+                right: (integer))
             consequence: (block
-              (break_statement
+                (continue_statement
                 label: (identifier))))
-          (compound_assignment_statement
+            (compound_assignment_statement
             left: (path
-              (identifier))
-            right: (integer))))
-      (expression_statement
-        (macro_invocation
-          macro: (path
+                (identifier))
+            right: (binary_expression
+                left: (path
+                (identifier))
+                right: (path
+                (identifier))))))))
+    (while_expression
+    label: (loop_label
+        name: (identifier))
+    condition: (binary_expression
+        left: (path
+        (identifier))
+        right: (integer))
+    body: (block
+        (if_expression
+        condition: (binary_expression
+            left: (path
             (identifier))
-          arguments: (argument_list
-            (path
-              (identifier))
-            (integer)))))))
+            right: (integer))
+        consequence: (block
+            (break_statement
+            label: (identifier))))
+        (compound_assignment_statement
+        left: (path
+            (identifier))
+        right: (integer))))
+    (expression_statement
+    (macro_invocation
+        macro: (path
+        (identifier))
+        arguments: (argument_list
+        (path
+            (identifier))
+        (integer)))))

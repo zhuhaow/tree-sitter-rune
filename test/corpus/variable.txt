@@ -2,101 +2,83 @@
 Let statements
 ==================
 
-fn main() {
-  let x = 42;
-  let name = "John";
-  let active = true;
-  let numbers = [1, 2, 3];
-}
+let x = 42;
+let name = "John";
+let active = true;
+let numbers = [1, 2, 3];
 
 ---
 
 (source_file
-  (fn_declaration
+  (let_statement
     (identifier)
-    (parameter_list)
-    (block
-      (let_statement
-        (identifier)
-        (integer))
-      (let_statement
-        (identifier)
-        (static_string))
-      (let_statement
-        (identifier)
-        (boolean))
-      (let_statement
-        (identifier)
-        (vector
-          (integer)
-          (integer)
-          (integer))))))
+    (integer))
+  (let_statement
+    (identifier)
+    (static_string))
+  (let_statement
+    (identifier)
+    (boolean))
+  (let_statement
+    (identifier)
+    (vector
+      (integer)
+      (integer)
+      (integer))))
 
 ==================
 Const statements
 ==================
 
-fn main() {
-  const PI = 3.14;
-  const APP_NAME = "Rune App";
-  const ENABLED = true;
-  const EMPTY = ();
-}
+const PI = 3.14;
+const APP_NAME = "Rune App";
+const ENABLED = true;
+const EMPTY = ();
 
 ---
 
 (source_file
-  (fn_declaration
+  (const_statement
     (identifier)
-    (parameter_list)
-    (block
-      (const_statement
-        (identifier)
-        (float))
-      (const_statement
-        (identifier)
-        (static_string))
-      (const_statement
-        (identifier)
-        (boolean))
-      (const_statement
-        (identifier)
-        (unit)))))
+    (float))
+  (const_statement
+    (identifier)
+    (static_string))
+  (const_statement
+    (identifier)
+    (boolean))
+  (const_statement
+    (identifier)
+    (unit)))
 
 ==================
 Mixed statements
 ==================
 
-fn calculate() {
-  const TAX_RATE = 0.21;
-  let price = 100;
-  let total = price * (1 + TAX_RATE);
-  return total;
-}
+const TAX_RATE = 0.21;
+let price = 100;
+let total = price * (1 + TAX_RATE);
+return total;
 
 ---
 
 (source_file
-  (fn_declaration
+  (const_statement
     (identifier)
-    (parameter_list)
-    (block
-      (const_statement
-        (identifier)
-        (float))
-      (let_statement
-        (identifier)
-        (integer))
-      (let_statement
-        (identifier)
+    (float))
+  (let_statement
+    (identifier)
+    (integer))
+  (let_statement
+    (identifier)
+    (binary_expression
+      (path
+        (identifier))
+      (parenthesized_expression
         (binary_expression
+          (integer)
           (path
-            (identifier))
-          (parenthesized_expression
-            (binary_expression
-              (integer)
-              (path
-                (identifier))))))
-      (return_statement
-        (path
-          (identifier))))))
+            (identifier))))))
+  (return_statement
+    (path
+      (identifier))))

@@ -2,118 +2,88 @@
 Empty Vector
 ===
 
-fn test() {
-  []
-}
+[];
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (vector))))
+  (expression_statement
+    (vector)))
 
 ===
 Vector with one integer
 ===
 
-fn test() {
-  [1]
-}
+[1];
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (vector
-        (integer)))))
+  (expression_statement
+    (vector
+      (integer))))
 
 ===
 Vector with multiple primitives
 ===
 
-fn test() {
-  ["hello", 42, true]
-}
+["hello", 42, true];
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (vector
-        (static_string)
-        (integer)
-        (boolean)))))
+  (expression_statement
+    (vector
+      (static_string)
+      (integer)
+      (boolean))))
 
 ===
 Vector with trailing comma
 ===
 
-fn test() {
-  [1, 2, ]
-}
+[1, 2, ];
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
-      (vector
-        (integer)
-        (integer)))))
+  (expression_statement
+    (vector
+      (integer)
+      (integer))))
 
 ===
 Vector with nested vector
 ===
 
-fn test() {
-  [[1, 2], ["a", "b"]]
-}
+[[1, 2], ["a", "b"]];
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
+  (expression_statement
+    (vector
       (vector
-        (vector
-          (integer)
-          (integer))
-        (vector
-          (static_string)
-          (static_string))))))
+        (integer)
+        (integer))
+      (vector
+        (static_string)
+        (static_string)))))
 
 ===
 Vector with mixed types and trailing comma
 ===
 
-fn test() {
-  [false, "test", 123, [true, "nested"], ]
-}
+[false, "test", 123, [true, "nested"], ];
 
 ---
 
 (source_file
-  (fn_declaration
-    (identifier)
-    (parameter_list)
-    (block
+  (expression_statement
+    (vector
+      (boolean)
+      (static_string)
+      (integer)
       (vector
         (boolean)
-        (static_string)
-        (integer)
-        (vector
-          (boolean)
-          (static_string))))))
+        (static_string)))))
